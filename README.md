@@ -2,7 +2,7 @@
 
 # 🛡️ Borrower Copilot
 
-#### `AI-Powered Loan Advisor for Indian Borrowers`
+## `AI-Powered Loan Advisor for Indian Borrowers`
 
 ### *The Borrower's Side of the Table.*
 
