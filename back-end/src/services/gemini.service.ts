@@ -25,9 +25,9 @@ CRITICAL RULES:
    5. Prepayment Defense and Add-on Trap: Warn about unnecessary lender-bundled insurance packages that inflate the loan amount and explain how making small early principal prepayments during the initial years dramatically cuts front-loaded interest without stressing monthly cash flow.`;
 
 const CANDIDATE_MODELS = [
-  'gemini-3.8-flash',
-  'gemini-3.7-flash',
   'gemini-3.5-flash-lite',
+  'gemini-3.5-flash',
+  'gemini-3.8-flash',
 ];
 
 export interface GeminiSummaryResult {
@@ -49,18 +49,18 @@ export async function generateAiSummary(
   const ai = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
 
   const promptContent = `Assessment Data:
-- Borrower: Age ${input.borrower.age}, ${input.borrower.employmentType}, Monthly Income ₹${input.borrower.monthlyIncome}
-- Loan Purpose: ${input.loan.purpose}, Requested Amount: ₹${input.loan.requestedAmount}, Tenure: ${input.loan.tenure} years
-- Financials: Existing EMI ₹${input.financial.existingEmi}, Expenses ₹${input.financial.householdExpenses}, Rent ₹${input.financial.rent}
-- Recommendation: ${result.recommendation} (${result.recommendationReason})
-- Safe Borrowing Amount: ₹${result.borrowerSafeAmount} (Lender Indicative: ₹${result.lenderIndicativeAmount}, Recommended: ₹${result.recommendedAmount})
-- Safe Monthly EMI Ceiling: ₹${result.safeEmi} (Requested EMI: ₹${result.requestedEmi})
-- Fair Interest Rate Range: ${result.fairRateMin}% - ${result.fairRateMax}%
-- APR Range: ${result.estimatedAprMin}% - ${result.estimatedAprMax}%
-- Confidence: ${result.confidence}
-- High Cost Debt: ${result.highCostDebtWarning ? result.highCostDebtMessage || 'Warning present' : 'None'}
-- Stress Test Scenario: ${result.stressTest.scenario} (Manageable: ${result.stressTest.isManageable ? 'Yes' : 'No'} - ${result.stressTest.explanation})
-- Explanations: ${result.explanations.join('; ')}`;
+- Borrower: Age ${input?.borrower?.age ?? 'N/A'}, ${input?.borrower?.employmentType ?? 'N/A'}, Monthly Income ₹${input?.borrower?.monthlyIncome ?? 'N/A'}
+- Loan Purpose: ${input?.loan?.purpose ?? 'N/A'}, Requested Amount: ₹${input?.loan?.requestedAmount ?? 'N/A'}, Tenure: ${input?.loan?.tenure ?? 'N/A'} years
+- Financials: Existing EMI ₹${input?.financial?.existingEmi ?? 0}, Expenses ₹${input?.financial?.householdExpenses ?? 0}, Rent ₹${input?.financial?.rent ?? 0}
+- Recommendation: ${result?.recommendation ?? 'BORROW'} (${result?.recommendationReason ?? ''})
+- Safe Borrowing Amount: ₹${result?.borrowerSafeAmount ?? 'N/A'} (Lender Indicative: ₹${result?.lenderIndicativeAmount ?? 'N/A'}, Recommended: ₹${result?.recommendedAmount ?? 'N/A'})
+- Safe Monthly EMI Ceiling: ₹${result?.safeEmi ?? 'N/A'} (Requested EMI: ₹${result?.requestedEmi ?? 'N/A'})
+- Fair Interest Rate Range: ${result?.fairRateMin ?? ''}% - ${result?.fairRateMax ?? ''}%
+- APR Range: ${result?.estimatedAprMin ?? ''}% - ${result?.estimatedAprMax ?? ''}%
+- Confidence: ${result?.confidence ?? 'MEDIUM'}
+- High Cost Debt: ${result?.highCostDebtWarning ? result?.highCostDebtMessage || 'Warning present' : 'None'}
+- Stress Test Scenario: ${result?.stressTest?.scenario || 'Standard'} (Manageable: ${result?.stressTest?.isManageable ? 'Yes' : 'No'} - ${result?.stressTest?.explanation || ''})
+- Explanations: ${Array.isArray(result?.explanations) ? result.explanations.join('; ') : ''}`;
 
   let lastError: unknown = null;
 
