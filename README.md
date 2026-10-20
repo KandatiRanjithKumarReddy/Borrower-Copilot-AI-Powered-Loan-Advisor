@@ -2,6 +2,8 @@
 
 # 🛡️ Borrower Copilot
 
+#### `AI-Powered Loan Advisor for Indian Borrowers`
+
 ### *The Borrower's Side of the Table.*
 
 ### *Know what you can afford before you negotiate.*
@@ -15,11 +17,12 @@ A full-stack financial self-assessment system, negotiation card generator, and A
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Gemini AI](https://img.shields.io/badge/Gemini_AI-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)](https://ai.google.dev/)
 [![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://borrower-copilot-pi.vercel.app)
 
 <br/>
 
-### 🚀 [Live Application](https://borrower-copilot-pi.vercel.app) &nbsp;|&nbsp; ⚡ [Backend API Health](https://borrower-copilot-backend.vercel.app/api/health) &nbsp;|&nbsp; 📦 [GitHub Repository](https://github.com/KandatiRanjithKumarReddy/Borrower-Copilot)
+### 🚀 [Live Application](https://borrower-copilot-pi.vercel.app) &nbsp;|&nbsp; 📦 [GitHub Repository](https://github.com/KandatiRanjithKumarReddy/Borrower-Copilot)
 
 <br/>
 
@@ -28,9 +31,6 @@ A full-stack financial self-assessment system, negotiation card generator, and A
 [BorrowerIQ AI](#-borroweriq-ai-insights) •
 [System Architecture](#-system-architecture) •
 [Tech Stack](#-tech-stack) •
-[Database Schema](#-database-schema) •
-[Quick Start](#-quick-start) •
-[Deployment](#-deployment) •
 [Financial Engine](#-financial-rules-engine) •
 [Privacy Commitment](#-privacy--security-commitment)
 
@@ -42,64 +42,64 @@ A full-stack financial self-assessment system, negotiation card generator, and A
 
 ## 💡 Core Thesis
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│               Lender Eligibility  ≠  Borrower Affordability            │
-└────────────────────────────────────────────────────────────────────────┘
-```
+### The Problem
 
-Standard bank calculators answer: **"What is the maximum amount we can extract from this borrower?"**  
-**Borrower Copilot** answers: **"What is the maximum amount this borrower can repay without risking household financial distress?"**
+When you walk into a bank and ask for a loan, the bank runs its own calculator. That calculator is designed to figure out the **maximum amount the bank can lend you** — not the maximum amount you can **safely repay**.
 
-It sits firmly on the borrower's side of the table, arming consumers with mathematical truth, fair interest rate ranges, plain-English **BorrowerIQ** insights, and an actionable **Negotiation Card** before speaking with loan officers.
+These are two very different numbers. Banks approve loans based on eligibility. But eligibility ignores your rent, your groceries, your kids' school fees, and your emergency savings. The result? Millions of borrowers take on loans they technically qualify for — but practically can't afford.
+
+### The Solution
+
+**Borrower Copilot** flips the table. Instead of asking *"How much can the bank give me?"*, it answers:
+
+> **"How much can I actually repay every month without putting my household at financial risk?"**
+
+It gives you:
+- ✅ A clear **BORROW / BORROW LESS / DON'T BORROW** decision
+- ✅ Your **safe loan amount** vs what the bank would approve
+- ✅ A **fair interest rate range** so you know if you're being overcharged
+- ✅ An **AI-generated summary** explaining everything in plain English
+- ✅ A one-page **Negotiation Card** to carry into your bank meeting
 
 ---
 
-## 🎯 The Four Critical Questions
+## 🎯 The Four Questions Every Borrower Should Ask
 
-| # | Question | Decision-Support Output | Engine Derivation |
+| # | Question | What You Get | How It Works |
 |:---:|:---|:---|:---|
-| **1** | **Should I borrow at all?** | `BORROW` · `BORROW LESS` · `DON'T BORROW` | Multi-variable decision matrix factoring FOIR, stress buffers, bounce history & high-cost debt |
-| **2** | **How much am I really eligible for?** | **Lender-Indicative** vs **Borrower-Safe** Amount | Exposes the dangerous gap between what a bank will sanction vs what income supports |
-| **3** | **What is a fair interest rate?** | **Fair Rate Range (Min–Max)** + **True APR** | Product-indexed base rates with risk adjustments; APR solved via Newton-Raphson iteration |
-| **4** | **What EMI should I commit to?** | **EMI Ceiling** + **Tenure Trade-Off Matrix** | Constrained by minimum of FOIR threshold and uncommitted monthly cash surplus |
+| **1** | **Should I borrow at all?** | `BORROW` · `BORROW LESS` · `DON'T BORROW` | Analyzes your income, existing debts, savings buffer, and repayment history |
+| **2** | **How much can I safely borrow?** | **Bank's Amount** vs **Your Safe Amount** | Shows the gap between what a bank will approve and what you can actually afford |
+| **3** | **What's a fair interest rate?** | **Fair Rate Range** + **True Cost (APR)** | Calculates what you should be paying based on your profile, not what the bank quotes |
+| **4** | **What EMI should I commit to?** | **EMI Ceiling** + **Tenure Options** | Caps your monthly payment at what your household budget can handle |
 
 ---
 
 ## ✨ Key Features
 
-- **⚡ Adaptive 5-Step Diagnostic** — Contextual question flow dynamically tailored for *Salaried*, *Self-Employed*, and *Informal/Gig* workers.
-- **🛡️ Honest Decision Engine** — Built to protect borrowers. The engine decisively outputs **`DON'T BORROW`** when debt-traps or cash-flow insolvency are detected.
-- **📊 True Dual-Amount Visualization** — Side-by-side comparative bar revealing when a lender's sanctioned offer overshoots the borrower's safe repayment capacity.
-- **🏷️ Multi-Factor Fair Rate Band** — Evaluates credit tiers, job stability, income variance, and penalizes predatory APRs.
-- **🔬 Mathematical APR Solver** — Numerical Newton-Raphson algorithm computing effective annual percentage rate accounting for processing fees and 18% GST.
-- **🌪️ Dual-Shock Stress Testing** — Evaluates resilience under:
-  - **Income Shock:** Immediate 15% reduction in net monthly earnings.
-  - **Rate Shock:** +200 bps (+2.0%) interest spike for floating-rate loans.
-- **🎴 Single-Screen Negotiation Card** — Clean, printer-friendly summary with high-leverage talking points tailored to the borrower's exact profile.
-- **🧠 BorrowerIQ AI Insights** — 5 plain-English strategic takeaways highlighting budget defense, bank sales tactics, emergency buffers, tenure adjustments, and prepayment defense.
-- **💬 Floating User Feedback Widget** — Global, persistent bottom-right modal allowing borrowers to submit Ideas, Problems, and suggestions directly into MySQL.
-- **🔐 User Accounts & Assessment History** — JWT authentication, Google OAuth sign-in, profile management, and saved diagnostic timelines.
+- **⚡ Adaptive 5-Step Diagnostic** — Smart question flow tailored for *Salaried*, *Self-Employed*, and *Gig/Informal* workers.
+- **🛡️ Honest Decision Engine** — Built to protect you. Outputs **`DON'T BORROW`** when it detects a debt trap.
+- **📊 Dual-Amount Comparison** — See your bank's approved amount side-by-side with your actual safe repayment limit.
+- **🏷️ Fair Rate Band** — Know the fair interest rate range for your profile before stepping into a bank.
+- **🔬 True APR Calculator** — Computes the real annual cost of your loan including processing fees and GST.
+- **🌪️ Stress Testing** — Tests if you can still repay after a 15% income drop or a 2% interest rate hike.
+- **🎴 Negotiation Card** — A printable one-page cheat sheet with talking points for your bank meeting.
+- **🧠 BorrowerIQ AI Insights** — 5 plain-English takeaways powered by Google Gemini AI.
+- **💬 Feedback Widget** — Built-in feedback system for submitting ideas, problems, and suggestions.
+- **🔐 Accounts & History** — Sign in with email or Google, save assessments, and track your diagnostic history.
 
 ---
 
 ## 🧠 BorrowerIQ AI Insights
 
-BorrowerIQ evaluates your numerical assessment through our backend analytical engine to deliver five clear, personalized takeaway points:
+After completing your assessment, BorrowerIQ uses **Google Gemini AI** to generate five personalized takeaways in plain English:
 
-1. **Household Budget Impact:** What this payment means for daily living, rent, and monthly savings.
-2. **Bank Sales vs Your Protection:** Why lenders push higher loan amounts to meet sales targets, and why sticking to your safe limit protects your family.
-3. **Emergency Buffer:** Keeping family safety savings untouched rather than draining them for loan fees or down payments.
-4. **Practical Adjustment Tip:** How adjusting tenure or down payment keeps monthly payments comfortable.
-5. **Prepayment Defense & Add-on Trap:** How opting out of unnecessary lender-bundled insurance packages and making small early principal prepayments slashes front-loaded interest without stressing monthly cash flow.
+1. **Household Budget Impact** — What this EMI actually means for your daily expenses and savings.
+2. **Bank Sales vs Your Safety** — Why the bank's approved amount is higher than what's safe for you.
+3. **Emergency Buffer Check** — Whether your savings stay protected or get drained by loan costs.
+4. **Practical Adjustment Tip** — How tweaking tenure or down payment keeps things comfortable.
+5. **Prepayment & Add-on Trap** — How to avoid unnecessary insurance add-ons and save on interest.
 
-### Automatic Model Fallback Cascade
-To guarantee high availability and resilience under rate limits, BorrowerIQ implements an automated model cascade:
-1. Primary: `gemini-3.8-flash`
-2. Fallback 1: `gemini-3.7-flash`
-3. Fallback 2: `gemini-3.5-flash-lite`
-
-All model and vendor names are sanitized in the user interface to preserve clean consumer-facing branding.
+> **Reliability:** BorrowerIQ uses an automatic model fallback cascade (`gemini-3.5-flash-lite` → `gemini-3.7-flash` → `gemini-3.8-flash`) to ensure insights are always generated, even under heavy load.
 
 ---
 
@@ -146,156 +146,16 @@ Borrower Copilot is built as a modern, decoupled full-stack application deployed
 
 | Tier | Technology | Purpose |
 |---|---|---|
-| **Frontend Framework** | `React 19` | Modern concurrent rendering, fast client-side state management |
-| **Frontend Styling** | `Tailwind CSS 4.0` | High-performance CSS engine with customized tokens |
-| **Build Tooling** | `Vite 6.0` | Lightning-fast development server and optimized production bundling |
-| **Backend Framework** | `Express 4.21` | REST API routes, authentication middleware, error handling |
-| **Runtime & Language** | `Node.js 18+` / `TypeScript 5.7` | Strict end-to-end type safety across engine and API contracts |
-| **Database** | `MySQL 8.0` (`mysql2/promise`) | Relational persistence with foreign keys and index optimization |
-| **Authentication** | `JWT` + `bcryptjs` + Google OAuth | Salted password hashing and secure token sessions |
-| **AI Integration** | `@google/genai` | Multi-model fallback cascade for BorrowerIQ insights |
-| **Icons & Typography** | `Lucide React` + `Inter` | Clean stroke iconography and legible tabular financial figures |
-
----
-
-## 🗄️ Database Schema
-
-The backend uses a normalized MySQL database (`project3`) containing five core tables:
-
-1. **`users`** — User credentials (email, bcrypt password hash, Google ID, display name, created_at).
-2. **`assessments`** — Saved financial diagnostics with foreign key to `users(id)`, storing JSON inputs and calculated results.
-3. **`ai_summaries`** — BorrowerIQ insights associated with assessments, caching generated text and the model used.
-4. **`contact_inquiries`** — General support inquiries submitted through the Contact page.
-5. **`feedback`** — User feedback submitted via the floating widget, categorized by `ENUM('Idea', 'Problem', 'Other')`.
-
----
-
-## 📁 Repository Structure
-
-```
-p3/
-├── README.md                    # Project documentation
-├── back-end/                    # Express + TypeScript Backend
-│   ├── src/
-│   │   ├── config/              # Database connection pool and environment validation
-│   │   ├── controllers/         # Auth, Assessment, Contact, Feedback controllers
-│   │   ├── middleware/          # JWT authentication and user validation
-│   │   ├── migrations/          # schema.sql database definition
-│   │   ├── routes/              # Express API route declarations
-│   │   ├── services/            # Gemini AI service, assessment services
-│   │   └── index.ts             # Express application entry point
-│   ├── package.json
-│   └── tsconfig.json
-│
-└── front-end/                   # React 19 + TypeScript Frontend
-    ├── src/
-    │   ├── api/client.ts        # Typed API client for auth, assessment, feedback, contact
-    │   ├── components/          # UI components (Header, Footer, Modals, Pages, Widgets)
-    │   │   ├── AboutPage.tsx        # Purpose, Affordability vs Eligibility, Diagnostic Suite
-    │   │   ├── AiSummaryCard.tsx    # BorrowerIQ 5 Key Takeaways with bold styling
-    │   │   ├── AssessmentHistory.tsx # Saved diagnostic timeline
-    │   │   ├── AuthModal.tsx        # Login & registration modal with Google Sign-In
-    │   │   ├── ContactPage.tsx      # Contact form and expanded borrower FAQs
-    │   │   ├── FeedbackWidget.tsx   # Floating Send Feedback modal (Idea/Problem/Other)
-    │   │   ├── Footer.tsx           # 3-column layout, Ranjith ♡ credit, Privacy Policy link
-    │   │   ├── HeaderBrand.tsx      # Navigation, styled red logout, profile dropdown
-    │   │   ├── LandingPage.tsx      # Hero, verified privacy banner, demo personas
-    │   │   ├── LoginPage.tsx        # Standalone login view
-    │   │   ├── NegotiationCard.tsx  # Printable negotiation cheat-sheet
-    │   │   ├── PrivacyPolicyPage.tsx # Dedicated transparent privacy disclosures
-    │   │   ├── ProfileModal.tsx     # User profile editor
-    │   │   ├── Questionnaire.tsx    # 5-stage borrower diagnostic
-    │   │   ├── RegisterPage.tsx     # Standalone account creation view
-    │   │   └── ResultsPage.tsx      # Full diagnostic dashboard
-    │   ├── engine/              # Headless financial rules engine
-    │   ├── utils/               # Currency formatters, persona definitions
-    │   ├── App.tsx              # Main application router
-    │   └── main.tsx             # React mount
-    ├── package.json
-    └── vite.config.ts
-```
-
----
-
-## 🚀 Quick Start (Local Development)
-
-### Prerequisites
-- **Node.js**: v18.0.0 or higher
-- **MySQL**: 8.0+ running locally, or a cloud-hosted MySQL instance (e.g. [Aiven](https://aiven.io/))
-- **Google Gemini API Key**: from [Google AI Studio](https://aistudio.google.com/)
-- **Google OAuth Client ID**: from [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/KandatiRanjithKumarReddy/Borrower-Copilot.git
-cd Borrower-Copilot
-```
-
-### 2. Database Setup
-Create the MySQL database and run the schema migration:
-```sql
-CREATE DATABASE project3;
-USE project3;
-SOURCE back-end/src/migrations/schema.sql;
-```
-
-### 3. Backend Setup
-```bash
-cd back-end
-npm install
-cp .env.example .env
-# Edit .env with your database, JWT, Gemini, and OAuth credentials
-npm run build
-npm start
-```
-
-### 4. Frontend Setup
-```bash
-cd front-end
-npm install
-cp .env.example .env
-# Edit .env — set VITE_API_URL=http://localhost:3001
-npm run dev
-```
-Open `http://localhost:5173/` in your browser.
-
----
-
-## ☁️ Deployment
-
-Borrower Copilot is deployed on **Vercel** (frontend + backend) with **Aiven Cloud MySQL** as the managed database.
-
-| Service | Platform | Live URL |
-|---|---|---|
-| **Frontend** | Vercel (Edge) | [borrower-copilot-pi.vercel.app](https://borrower-copilot-pi.vercel.app) |
-| **Backend API** | Vercel (Serverless) | [borrower-copilot-backend.vercel.app](https://borrower-copilot-backend.vercel.app) |
-| **Database** | Aiven Cloud MySQL 8.0 | Managed · SSL · 5 Tables |
-| **AI Engine** | Google Gemini API | Model fallback cascade |
-| **OAuth** | Google Cloud Console | Authorized JS origins configured |
-| **Source Code** | GitHub | [KandatiRanjithKumarReddy/Borrower-Copilot](https://github.com/KandatiRanjithKumarReddy/Borrower-Copilot) |
-
-### Vercel Environment Variables
-
-**Backend** (`back-end/`):
-| Variable | Description |
-|---|---|
-| `DB_HOST` | Aiven MySQL hostname |
-| `DB_PORT` | Aiven MySQL port |
-| `DB_USER` | Database username |
-| `DB_PASSWORD` | Database password |
-| `DB_NAME` | Database name (e.g. `defaultdb`) |
-| `DB_SSL` | Set to `true` for cloud databases |
-| `JWT_SECRET` | Secure random secret for JWT tokens |
-| `GEMINI_API_KEY` | Google Gemini API key |
-| `GOOGLE_CLIENT_ID` | Google OAuth 2.0 Client ID |
-| `GOOGLE_CLIENT_SECRET` | Google OAuth 2.0 Client Secret |
-| `CORS_ORIGIN` | Frontend URL (e.g. `https://borrower-copilot-pi.vercel.app`) |
-
-**Frontend** (`front-end/`):
-| Variable | Description |
-|---|---|
-| `VITE_API_URL` | Backend API URL (e.g. `https://borrower-copilot-backend.vercel.app`) |
-| `VITE_GOOGLE_CLIENT_ID` | Google OAuth 2.0 Client ID |
+| **Frontend** | `React 19` + `Tailwind CSS 4.0` | Modern UI with concurrent rendering and utility-first styling |
+| **Build Tool** | `Vite 6.0` | Fast development server and optimized production builds |
+| **Backend** | `Express 4.21` + `TypeScript 5.7` | Type-safe REST API with middleware and error handling |
+| **Runtime** | `Node.js 18+` | Server-side JavaScript runtime |
+| **Database** | `MySQL 8.0` | Relational storage with foreign keys and indexing |
+| **AI Engine** | `Google Gemini AI` (`@google/genai`) | AI-powered insights with multi-model fallback cascade |
+| **Auth** | `JWT` + `bcryptjs` + `Google OAuth` | Secure authentication with encrypted passwords and social login |
+| **Deployment** | `Vercel` (Frontend + Backend) | Edge network for frontend, serverless functions for API |
+| **Cloud Database** | `Aiven Cloud MySQL` | Managed MySQL with SSL encryption |
+| **Icons & Fonts** | `Lucide React` + `Inter` | Clean iconography and readable financial typography |
 
 ---
 
@@ -362,10 +222,10 @@ Where $\text{Total Upfront Fees} = (\text{Principal} \times \text{Processing Fee
 
 ---
 
-## 📄 License & Credit
+<div align="center">
 
 Distributed under the **MIT License**.
 
-```
-© 2026 Borrower Copilot · Built independently by Ranjith ❤️
-```
+`© 2026 Borrower Copilot · Built independently by Ranjith ❤️`
+
+</div>
