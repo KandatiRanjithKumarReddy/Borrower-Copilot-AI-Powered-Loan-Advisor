@@ -10,7 +10,7 @@ if (isProd && (!jwtSecret || jwtSecret === 'fallback-dev-secret')) {
 
 export const env = {
   PORT: parseInt(process.env.PORT || '3001', 10),
-  CORS_ORIGIN: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  CORS_ORIGIN: process.env.CORS_ORIGIN || 'https://borrower-copilot-pi.vercel.app',
 
   // MySQL
   DB_HOST: process.env.DB_HOST || 'localhost',

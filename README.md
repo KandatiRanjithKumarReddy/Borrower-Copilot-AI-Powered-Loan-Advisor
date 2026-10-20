@@ -15,6 +15,11 @@ A full-stack financial self-assessment system, negotiation card generator, and A
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://borrower-copilot-pi.vercel.app)
+
+<br/>
+
+### 🚀 [Live Application](https://borrower-copilot-pi.vercel.app) &nbsp;|&nbsp; ⚡ [Backend API Health](https://borrower-copilot-backend.vercel.app/api/health) &nbsp;|&nbsp; 📦 [GitHub Repository](https://github.com/KandatiRanjithKumarReddy/Borrower-Copilot)
 
 <br/>
 
@@ -25,6 +30,7 @@ A full-stack financial self-assessment system, negotiation card generator, and A
 [Tech Stack](#-tech-stack) •
 [Database Schema](#-database-schema) •
 [Quick Start](#-quick-start) •
+[Deployment](#-deployment) •
 [Financial Engine](#-financial-rules-engine) •
 [Privacy Commitment](#-privacy--security-commitment)
 
@@ -99,34 +105,39 @@ All model and vendor names are sanitized in the user interface to preserve clean
 
 ## 🏛️ System Architecture
 
-Borrower Copilot is built as a modern, decoupled full-stack application:
+Borrower Copilot is built as a modern, decoupled full-stack application deployed on cloud infrastructure:
 
 ```
-┌────────────────────────────────────────────────────────────────────────┐
-│                        FRONTEND (React 19 + Vite)                      │
-│                                                                        │
-│  LandingPage ──► Questionnaire ──► ResultsPage ──► NegotiationCard     │
-│       │                 │                │                             │
-│  AboutPage         ContactPage    AssessmentHistory    PrivacyPolicy   │
-│                                                                        │
-│  [HeaderBrand with Profile Dropdown]    [Floating FeedbackWidget]      │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ REST API (JSON / Bearer JWT)
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│                       BACKEND (Node.js + Express)                      │
-│                                                                        │
-│  /api/auth          - Register, Login, Google OAuth, Profile (/me)     │
-│  /api/assessments   - Create, List, Detail, Preview, BorrowerIQ AI     │
-│  /api/contact       - Inquiries & Message Submissions                  │
-│  /api/feedback      - Idea / Problem / Other Categorized Feedback      │
-└───────────────────┬────────────────────────────────┬───────────────────┘
-                    │                                │
-                    ▼                                ▼
-       ┌────────────────────────┐       ┌────────────────────────┐
-       │   MySQL 8.0 Database   │       │   Google Gemini API    │
-       │   (Isolated Storage)   │       │   (Model Cascade)      │
-       └────────────────────────┘       └────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                  FRONTEND · Vercel Edge Network                                │
+│                  https://borrower-copilot-pi.vercel.app                        │
+│                  React 19 + Vite + Tailwind CSS 4                              │
+│                                                                                 │
+│  LandingPage ──► Questionnaire ──► ResultsPage ──► NegotiationCard              │
+│       │                 │                │                                      │
+│  AboutPage         ContactPage    AssessmentHistory    PrivacyPolicy            │
+│                                                                                 │
+│  [HeaderBrand with Profile Dropdown]    [Floating FeedbackWidget]               │
+└──────────────────────────────────┬──────────────────────────────────────────────┘
+                                   │ REST API (JSON / Bearer JWT)
+                                   ▼
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                  BACKEND · Vercel Serverless Functions                          │
+│                  https://borrower-copilot-backend.vercel.app                    │
+│                  Node.js + Express + TypeScript                                 │
+│                                                                                 │
+│  /api/auth          - Register, Login, Google OAuth, Profile (/me)              │
+│  /api/assessments   - Create, List, Detail, Preview, BorrowerIQ AI              │
+│  /api/contact       - Inquiries & Message Submissions                           │
+│  /api/feedback      - Idea / Problem / Other Categorized Feedback               │
+│  /api/health        - Database & Service Health Check                            │
+└───────────────────┬─────────────────────────────────┬───────────────────────────┘
+                    │                                 │
+                    ▼                                 ▼
+       ┌─────────────────────────────┐   ┌─────────────────────────────┐
+       │   Aiven Cloud MySQL 8.0     │   │   Google Gemini AI API      │
+       │   (Managed · SSL · 5 Tables)│   │   (Model Fallback Cascade)  │
+       └─────────────────────────────┘   └─────────────────────────────┘
 ```
 
 ---
@@ -206,14 +217,21 @@ p3/
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Start (Local Development)
 
 ### Prerequisites
 - **Node.js**: v18.0.0 or higher
-- **MySQL**: 8.0+ running on `localhost:3306`
-- **Google Gemini API Key**: from Google AI Studio
+- **MySQL**: 8.0+ running locally, or a cloud-hosted MySQL instance (e.g. [Aiven](https://aiven.io/))
+- **Google Gemini API Key**: from [Google AI Studio](https://aistudio.google.com/)
+- **Google OAuth Client ID**: from [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
 
-### 1. Database Setup
+### 1. Clone the Repository
+```bash
+git clone https://github.com/KandatiRanjithKumarReddy/Borrower-Copilot.git
+cd Borrower-Copilot
+```
+
+### 2. Database Setup
 Create the MySQL database and run the schema migration:
 ```sql
 CREATE DATABASE project3;
@@ -221,32 +239,63 @@ USE project3;
 SOURCE back-end/src/migrations/schema.sql;
 ```
 
-### 2. Backend Setup
+### 3. Backend Setup
 ```bash
 cd back-end
 npm install
-
-# Create .env file with your credentials:
-# PORT=3000
-# DB_HOST=localhost
-# DB_PORT=3306
-# DB_USER=root
-# DB_PASSWORD=your_password
-# DB_NAME=project3
-# JWT_SECRET=your_jwt_secret
-# GEMINI_API_KEY=your_gemini_api_key
-
+cp .env.example .env
+# Edit .env with your database, JWT, Gemini, and OAuth credentials
 npm run build
 npm start
 ```
 
-### 3. Frontend Setup
+### 4. Frontend Setup
 ```bash
 cd front-end
 npm install
+cp .env.example .env
+# Edit .env — set VITE_API_URL=http://localhost:3001
 npm run dev
 ```
 Open `http://localhost:5173/` in your browser.
+
+---
+
+## ☁️ Deployment
+
+Borrower Copilot is deployed on **Vercel** (frontend + backend) with **Aiven Cloud MySQL** as the managed database.
+
+| Service | Platform | Live URL |
+|---|---|---|
+| **Frontend** | Vercel (Edge) | [borrower-copilot-pi.vercel.app](https://borrower-copilot-pi.vercel.app) |
+| **Backend API** | Vercel (Serverless) | [borrower-copilot-backend.vercel.app](https://borrower-copilot-backend.vercel.app) |
+| **Database** | Aiven Cloud MySQL 8.0 | Managed · SSL · 5 Tables |
+| **AI Engine** | Google Gemini API | Model fallback cascade |
+| **OAuth** | Google Cloud Console | Authorized JS origins configured |
+| **Source Code** | GitHub | [KandatiRanjithKumarReddy/Borrower-Copilot](https://github.com/KandatiRanjithKumarReddy/Borrower-Copilot) |
+
+### Vercel Environment Variables
+
+**Backend** (`back-end/`):
+| Variable | Description |
+|---|---|
+| `DB_HOST` | Aiven MySQL hostname |
+| `DB_PORT` | Aiven MySQL port |
+| `DB_USER` | Database username |
+| `DB_PASSWORD` | Database password |
+| `DB_NAME` | Database name (e.g. `defaultdb`) |
+| `DB_SSL` | Set to `true` for cloud databases |
+| `JWT_SECRET` | Secure random secret for JWT tokens |
+| `GEMINI_API_KEY` | Google Gemini API key |
+| `GOOGLE_CLIENT_ID` | Google OAuth 2.0 Client ID |
+| `GOOGLE_CLIENT_SECRET` | Google OAuth 2.0 Client Secret |
+| `CORS_ORIGIN` | Frontend URL (e.g. `https://borrower-copilot-pi.vercel.app`) |
+
+**Frontend** (`front-end/`):
+| Variable | Description |
+|---|---|
+| `VITE_API_URL` | Backend API URL (e.g. `https://borrower-copilot-backend.vercel.app`) |
+| `VITE_GOOGLE_CLIENT_ID` | Google OAuth 2.0 Client ID |
 
 ---
 

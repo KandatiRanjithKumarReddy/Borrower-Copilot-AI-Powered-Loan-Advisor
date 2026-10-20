@@ -11,9 +11,51 @@ import feedbackRoutes from './routes/feedback.routes.js';
 
 const app = express();
 
+// Allowed origins for CORS (production frontend + local dev + vercel previews)
+const allowedOrigins = [
+  'https://borrower-copilot-pi.vercel.app',
+  'https://borrower-copilot.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:5174',
+];
+
+if (env.CORS_ORIGIN) {
+  env.CORS_ORIGIN.split(',').forEach((origin) => {
+    const trimmed = origin.trim();
+    if (trimmed && !allowedOrigins.includes(trimmed)) {
+      allowedOrigins.push(trimmed);
+    }
+  });
+}
+
 // Security & utility middleware
 app.use(cors({
-  origin: true,
+  origin: (origin, callback) => {
+    // Allow non-browser requests (e.g. server-to-server, curl, mobile)
+    if (!origin) return callback(null, true);
+
+    // Explicitly allowed origins
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    // Allow all Vercel deployment preview / branch URLs (*.vercel.app)
+    try {
+      const parsedUrl = new URL(origin);
+      if (parsedUrl.hostname === 'vercel.app' || parsedUrl.hostname.endsWith('.vercel.app')) {
+        return callback(null, true);
+      }
+    } catch {
+      // Ignore invalid URL parse
+    }
+
+    // Allow localhost/127.0.0.1 on any port during local development
+    if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
+      return callback(null, true);
+    }
+
+    return callback(null, false);
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
