@@ -2,7 +2,7 @@
 // Determines sustainable income, FOIR thresholds, and available payment capacity.
 // All thresholds are documented in RULES.md.
 
-import type { BorrowerProfile, FinancialProfile, EmploymentType } from './types';
+import type { BorrowerProfile, FinancialProfile, EmploymentType } from './types.js';
 
 // ── Sustainable Income ───────────────────────────────────────────────────────
 

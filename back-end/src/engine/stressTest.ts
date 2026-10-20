@@ -3,10 +3,10 @@
 //   1. Income drop (15%)
 //   2. Interest rate increase (+2%)
 
-import type { AssessmentInput, StressTestResult } from './types';
-import { calculateSustainableIncome } from './affordability';
-import { calculateEmi } from './emi';
-import { calculateFairRate } from './interestRate';
+import type { AssessmentInput, StressTestResult } from './types.js';
+import { calculateSustainableIncome } from './affordability.js';
+import { calculateEmi } from './emi.js';
+import { calculateFairRate } from './interestRate.js';
 
 const INCOME_DROP_PERCENT = 0.15;    // 15% income reduction
 const RATE_INCREASE_BPS = 200;       // +2% rate increase

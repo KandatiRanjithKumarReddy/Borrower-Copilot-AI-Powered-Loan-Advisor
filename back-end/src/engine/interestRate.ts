@@ -3,7 +3,7 @@
 // employment stability, and debt profile.
 // All rate bands are documented in RULES.md.
 
-import type { LoanType, BorrowerProfile, FinancialProfile } from './types';
+import type { LoanType, BorrowerProfile, FinancialProfile } from './types.js';
 
 // ── Product Rate Bands (Annual %) ────────────────────────────────────────────
 

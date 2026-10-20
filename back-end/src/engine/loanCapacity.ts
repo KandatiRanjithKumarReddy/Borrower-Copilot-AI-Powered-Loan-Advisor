@@ -3,10 +3,10 @@
 //   A. Lender-Indicative Amount — what a bank might potentially sanction
 //   B. Borrower-Safe Amount — what the borrower can responsibly afford
 
-import type { AssessmentInput, TenureOption } from './types';
-import { calculateSafeEmi } from './affordability';
-import { calculateEmi, calculateMaxPrincipal, calculateTotalInterest, calculateTotalRepayment } from './emi';
-import { calculateFairRate } from './interestRate';
+import type { AssessmentInput, TenureOption } from './types.js';
+import { calculateSafeEmi } from './affordability.js';
+import { calculateEmi, calculateMaxPrincipal, calculateTotalInterest, calculateTotalRepayment } from './emi.js';
+import { calculateFairRate } from './interestRate.js';
 
 // ── Lender-Indicative Amount ─────────────────────────────────────────────────
 

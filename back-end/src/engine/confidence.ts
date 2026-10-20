@@ -2,7 +2,7 @@
 // Calculates dynamic confidence level (HIGH / MEDIUM / LOW) based on
 // the completeness and quality of information provided.
 
-import type { AssessmentInput, Confidence } from './types';
+import type { AssessmentInput, Confidence } from './types.js';
 
 interface ConfidenceResult {
   confidence: Confidence;

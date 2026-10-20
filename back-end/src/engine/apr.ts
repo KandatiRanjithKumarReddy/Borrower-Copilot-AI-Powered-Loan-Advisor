@@ -2,7 +2,7 @@
 // Calculates the approximate Annual Percentage Rate including
 // processing fees and one-time charges on top of the nominal rate.
 
-import type { LoanType } from './types';
+import type { LoanType } from './types.js';
 
 // ── Processing Fee Assumptions ───────────────────────────────────────────────
 

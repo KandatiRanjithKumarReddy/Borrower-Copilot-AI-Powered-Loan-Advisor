@@ -2,7 +2,7 @@
 // Generates 3–5 actionable, concise negotiation points for the borrower
 // to use directly in a lender conversation.
 
-import type { AssessmentResult } from './types';
+import type { AssessmentResult } from './types.js';
 
 /**
  * Generate borrower-specific negotiation talking points.

@@ -1,21 +1,21 @@
 // ── Master Assessment Engine ─────────────────────────────────────────────────
 // Orchestrates all engine modules to produce a single AssessmentResult.
 
-import type { AssessmentInput, AssessmentResult, NegotiationCardData } from './types';
-import { calculateSafeEmi, calculateSustainableIncome } from './affordability';
-import { calculateEmi } from './emi';
-import { calculateFairRate, shouldRecommendSecuredLoan } from './interestRate';
-import { calculateAprRange } from './apr';
+import type { AssessmentInput, AssessmentResult, NegotiationCardData } from './types.js';
+import { calculateSafeEmi, calculateSustainableIncome } from './affordability.js';
+import { calculateEmi } from './emi.js';
+import { calculateFairRate, shouldRecommendSecuredLoan } from './interestRate.js';
+import { calculateAprRange } from './apr.js';
 import {
   calculateLenderIndicativeAmount,
   calculateBorrowerSafeAmount,
   calculateTenureOptions,
   findRecommendedTenure,
-} from './loanCapacity';
-import { calculateStressTest } from './stressTest';
-import { calculateConfidence } from './confidence';
-import { generateRecommendation } from './recommendation';
-import { generateNegotiationPoints } from './negotiation';
+} from './loanCapacity.js';
+import { calculateStressTest } from './stressTest.js';
+import { calculateConfidence } from './confidence.js';
+import { generateRecommendation } from './recommendation.js';
+import { generateNegotiationPoints } from './negotiation.js';
 
 /**
  * Run the complete borrower assessment.
@@ -176,4 +176,4 @@ export type {
   EmploymentType,
   LoanPurpose,
   LoanType,
-} from './types';
+} from './types.js';

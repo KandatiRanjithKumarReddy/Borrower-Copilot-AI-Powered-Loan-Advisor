@@ -1,11 +1,11 @@
 // ── Recommendation Engine ────────────────────────────────────────────────────
 // Determines BORROW / BORROW_LESS / DONT_BORROW based on comprehensive analysis.
 
-import type { AssessmentInput, Recommendation } from './types';
-import { calculateSafeEmi, calculateSustainableIncome } from './affordability';
-import { calculateEmi } from './emi';
-import { calculateFairRate } from './interestRate';
-import { calculateBorrowerSafeAmount } from './loanCapacity';
+import type { AssessmentInput, Recommendation } from './types.js';
+import { calculateSafeEmi, calculateSustainableIncome } from './affordability.js';
+import { calculateEmi } from './emi.js';
+import { calculateFairRate } from './interestRate.js';
+import { calculateBorrowerSafeAmount } from './loanCapacity.js';
 
 interface RecommendationResult {
   recommendation: Recommendation;

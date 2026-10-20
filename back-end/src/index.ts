@@ -29,6 +29,16 @@ app.use('/api/assessments', assessmentRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/feedback', feedbackRoutes);
 
+// Root status endpoint (shows active status for Vercel preview)
+app.get('/', (_req, res) => {
+  res.status(200).json({
+    service: 'Borrower Copilot API',
+    status: 'online',
+    version: '1.0.0',
+    endpoints: ['/api/health', '/api/auth', '/api/assessments', '/api/contact', '/api/feedback'],
+  });
+});
+
 // Health check endpoint
 app.get('/api/health', async (_req, res) => {
   const dbOk = await testDbConnection();
