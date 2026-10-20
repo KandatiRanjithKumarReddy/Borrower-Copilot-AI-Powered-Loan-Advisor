@@ -8,6 +8,8 @@ import {
   CreditCard,
   FileText,
   HelpCircle,
+  Loader2,
+  AlertCircle,
 } from 'lucide-react';
 import type {
   AssessmentInput,
@@ -25,6 +27,8 @@ interface QuestionnaireProps {
   onComplete: (input: AssessmentInput) => void;
   onBack: () => void;
   onHome?: () => void;
+  loading?: boolean;
+  error?: string | null;
 }
 
 const STEPS = ['Profile', 'Loan Details', 'Finances', 'Adaptive', 'Credit'];
@@ -54,7 +58,13 @@ const LOAN_TYPES: { value: LoanType; label: string }[] = [
 
 const TENURE_OPTIONS = [1, 2, 3, 5, 7, 10];
 
-export function Questionnaire({ onComplete, onBack, onHome }: QuestionnaireProps) {
+export function Questionnaire({
+  onComplete,
+  onBack,
+  onHome,
+  loading = false,
+  error = null,
+}: QuestionnaireProps) {
   const [step, setStep] = useState(0);
 
   // Borrower Profile
@@ -198,9 +208,15 @@ export function Questionnaire({ onComplete, onBack, onHome }: QuestionnaireProps
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-primary-50">
       {/* Header */}
       <header className="border-b border-slate-100 bg-white/70 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between">
-          <HeaderBrand onClick={onHome} />
-          <span className="text-sm text-slate-500">Step {step + 1} of {STEPS.length}</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
+          <HeaderBrand
+            onClick={onHome}
+            rightAction={
+              <span className="text-sm font-semibold text-primary-700 bg-primary-50 border border-primary-100 px-3 py-1.5 rounded-full whitespace-nowrap">
+                Step {step + 1} of {STEPS.length}
+              </span>
+            }
+          />
         </div>
       </header>
 
@@ -230,6 +246,16 @@ export function Questionnaire({ onComplete, onBack, onHome }: QuestionnaireProps
 
       {/* Form Content */}
       <main className="max-w-2xl mx-auto px-4 py-8">
+        {error && (
+          <div className="mb-4 p-4 bg-danger-50 border border-danger-200 rounded-xl flex items-start gap-3 text-danger-800 text-sm animate-fade-in">
+            <AlertCircle className="w-5 h-5 text-danger-600 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="font-semibold">Unable to process assessment</p>
+              <p className="text-xs text-danger-700 mt-0.5">{error}</p>
+            </div>
+          </div>
+        )}
+
         <div className="card animate-fade-in-up">
           {step === 0 && (
             <StepProfile
@@ -300,12 +326,21 @@ export function Questionnaire({ onComplete, onBack, onHome }: QuestionnaireProps
             </button>
             <button
               onClick={handleNext}
-              disabled={!canProceed()}
+              disabled={!canProceed() || loading}
               className="btn-primary flex items-center gap-2"
               id={step === STEPS.length - 1 ? 'submit-assessment' : 'next-step'}
             >
-              {step === STEPS.length - 1 ? 'View Assessment' : 'Continue'}
-              <ArrowRight className="w-4 h-4" />
+              {loading && step === STEPS.length - 1 ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Computing Diagnostic...</span>
+                </>
+              ) : (
+                <>
+                  {step === STEPS.length - 1 ? 'View Assessment' : 'Continue'}
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
             </button>
           </div>
         </div>

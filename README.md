@@ -2,29 +2,31 @@
 
 # 🛡️ Borrower Copilot
 
-### *Loan Advisor.*
+### *The Borrower's Side of the Table.*
 
 ### *Know what you can afford before you negotiate.*
 
-A borrower-first personal financial self-assessment engine and negotiation card generator designed for Indian retail borrowers.
+A full-stack financial self-assessment system, negotiation card generator, and AI-powered loan advisor designed for Indian retail borrowers.
 
 [![React 19](https://img.shields.io/badge/React-19.0-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-6.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev/)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-4.21-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![Privacy: 100% Client--Side](https://img.shields.io/badge/Privacy-100%25_Client--Side-10B981?style=for-the-badge&logo=shield&logoColor=white)](#-zero-knowledge-privacy)
 [![License: MIT](https://img.shields.io/badge/License-MIT-F59E0B?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 <br/>
 
 [Key Features](#-key-features) •
 [Core Thesis](#-core-thesis) •
+[BorrowerIQ AI](#-borroweriq-ai-insights) •
 [System Architecture](#-system-architecture) •
 [Tech Stack](#-tech-stack) •
+[Database Schema](#-database-schema) •
 [Quick Start](#-quick-start) •
 [Financial Engine](#-financial-rules-engine) •
-[Demo Personas](#-built-in-test-personas) •
-[Privacy](#-zero-knowledge-privacy)
+[Privacy Commitment](#-privacy--security-commitment)
 
 <br/>
 
@@ -41,9 +43,9 @@ A borrower-first personal financial self-assessment engine and negotiation card 
 ```
 
 Standard bank calculators answer: **"What is the maximum amount we can extract from this borrower?"**  
-**Borrower Copilot** answers: **"What is the maximum amount this borrower can repay without risking financial distress?"**
+**Borrower Copilot** answers: **"What is the maximum amount this borrower can repay without risking household financial distress?"**
 
-It sits between the borrower and the lender, arming the consumer with unvarnished mathematical truth, fair rate bands, and an actionable **Negotiation Card** before they sign an agreement.
+It sits firmly on the borrower's side of the table, arming consumers with mathematical truth, fair interest rate ranges, plain-English **BorrowerIQ** insights, and an actionable **Negotiation Card** before speaking with loan officers.
 
 ---
 
@@ -60,118 +62,146 @@ It sits between the borrower and the lender, arming the consumer with unvarnishe
 
 ## ✨ Key Features
 
-- **⚡ Adaptive 5-Step Diagnostic** — Contextual question flow dynamically tailoring income and stability questions for *Salaried*, *Self-Employed*, and *Informal/Gig* workers.
+- **⚡ Adaptive 5-Step Diagnostic** — Contextual question flow dynamically tailored for *Salaried*, *Self-Employed*, and *Informal/Gig* workers.
 - **🛡️ Honest Decision Engine** — Built to protect borrowers. The engine decisively outputs **`DON'T BORROW`** when debt-traps or cash-flow insolvency are detected.
 - **📊 True Dual-Amount Visualization** — Side-by-side comparative bar revealing when a lender's sanctioned offer overshoots the borrower's safe repayment capacity.
-- **🏷️ Multi-Factor Fair Rate Band** — Evaluates CIBIL/Experian credit tiers, job stability, income variance, and penalizes predatory APRs.
+- **🏷️ Multi-Factor Fair Rate Band** — Evaluates credit tiers, job stability, income variance, and penalizes predatory APRs.
 - **🔬 Mathematical APR Solver** — Numerical Newton-Raphson algorithm computing effective annual percentage rate accounting for processing fees and 18% GST.
 - **🌪️ Dual-Shock Stress Testing** — Evaluates resilience under:
   - **Income Shock:** Immediate 15% reduction in net monthly earnings.
   - **Rate Shock:** +200 bps (+2.0%) interest spike for floating-rate loans.
-- **🎴 Single-Screen Negotiation Card** — Clean, printer-friendly summary with 3–5 high-leverage talking points tailored to the borrower's exact profile.
-- **🎯 Dynamic Confidence Scoring** — Transparent confidence indicator (`HIGH` / `MEDIUM` / `LOW`) based on input completeness and verified data points, avoiding misleading pseudo-precision scores.
-- **💡 Plain-English Explainability** — Every single financial ratio and computation provides an expandable one-sentence breakdown of *how* and *why* it was derived.
+- **🎴 Single-Screen Negotiation Card** — Clean, printer-friendly summary with high-leverage talking points tailored to the borrower's exact profile.
+- **🧠 BorrowerIQ AI Insights** — 5 plain-English strategic takeaways highlighting budget defense, bank sales tactics, emergency buffers, tenure adjustments, and prepayment defense.
+- **💬 Floating User Feedback Widget** — Global, persistent bottom-right modal allowing borrowers to submit Ideas, Problems, and suggestions directly into MySQL.
+- **🔐 User Accounts & Assessment History** — JWT authentication, Google OAuth sign-in, profile management, and saved diagnostic timelines.
+
+---
+
+## 🧠 BorrowerIQ AI Insights
+
+BorrowerIQ evaluates your numerical assessment through our backend analytical engine to deliver five clear, personalized takeaway points:
+
+1. **Household Budget Impact:** What this payment means for daily living, rent, and monthly savings.
+2. **Bank Sales vs Your Protection:** Why lenders push higher loan amounts to meet sales targets, and why sticking to your safe limit protects your family.
+3. **Emergency Buffer:** Keeping family safety savings untouched rather than draining them for loan fees or down payments.
+4. **Practical Adjustment Tip:** How adjusting tenure or down payment keeps monthly payments comfortable.
+5. **Prepayment Defense & Add-on Trap:** How opting out of unnecessary lender-bundled insurance packages and making small early principal prepayments slashes front-loaded interest without stressing monthly cash flow.
+
+### Automatic Model Fallback Cascade
+To guarantee high availability and resilience under rate limits, BorrowerIQ implements an automated model cascade:
+1. Primary: `gemini-3.8-flash`
+2. Fallback 1: `gemini-3.7-flash`
+3. Fallback 2: `gemini-3.5-flash-lite`
+
+All model and vendor names are sanitized in the user interface to preserve clean consumer-facing branding.
 
 ---
 
 ## 🏛️ System Architecture
 
-The project enforces a strict **unidirectional, headless financial engine** architecture: zero UI coupling, 100% deterministic pure functions.
+Borrower Copilot is built as a modern, decoupled full-stack application:
 
 ```
-                               ┌───────────────────────────┐
-                               │   User Input / Personas   │
-                               └─────────────┬─────────────┘
-                                             │
-                                             ▼
-                      ┌─────────────────────────────────────────────┐
-                      │             src/engine/index.ts             │
-                      │             assessBorrower()                │
-                      └──────────────────────┬──────────────────────┘
-                                             │
-      ┌──────────────────┬───────────────────┼───────────────────┬──────────────────┐
-      ▼                  ▼                   ▼                   ▼                  ▼
-┌─────────────┐   ┌─────────────┐     ┌─────────────┐     ┌─────────────┐    ┌─────────────┐
-│affordability│   │  interest   │     │loanCapacity │     │ stressTest  │    │ confidence  │
-│  .ts        │   │   Rate.ts   │     │    .ts      │     │    .ts      │    │    .ts      │
-├─────────────┤   ├─────────────┤     ├─────────────┤     ├─────────────┤    ├─────────────┤
-│• Sustainable│   │• Product    │     │• Safe vs    │     │• -15% Income│    │• Data       │
-│  Haircuts   │   │  Bands      │     │  Sanctioned │     │• +200 bps   │    │  Density    │
-│• FOIR Tiers │   │• Risk Delta │     │• Inverse    │     │  Rate Shock │    │• Variance   │
-│• Safe EMI   │   │• APR Solver │     │  Amortized  │     │• Resilience │    │  Scoring    │
-└──────┬──────┘   └──────┬──────┘     └──────┬──────┘     └──────┬──────┘    └──────┬──────┘
-       │                 │                   │                   │                  │
-       └─────────────────┴───────────────────┼───────────────────┴──────────────────┘
-                                             ▼
-                               ┌───────────────────────────┐
-                               │     recommendation.ts     │
-                               │  Decision Tree Evaluation │
-                               └─────────────┬─────────────┘
-                                             │
-                                             ▼
-                               ┌───────────────────────────┐
-                               │      negotiation.ts       │
-                               │   Actionable Card Data    │
-                               └─────────────┬─────────────┘
-                                             │
-                                             ▼
-                               ┌───────────────────────────┐
-                               │     React 19 UI Layer     │
-                               │ ResultsPage & Card Render │
-                               └───────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────┐
+│                        FRONTEND (React 19 + Vite)                      │
+│                                                                        │
+│  LandingPage ──► Questionnaire ──► ResultsPage ──► NegotiationCard     │
+│       │                 │                │                             │
+│  AboutPage         ContactPage    AssessmentHistory    PrivacyPolicy   │
+│                                                                        │
+│  [HeaderBrand with Profile Dropdown]    [Floating FeedbackWidget]      │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ REST API (JSON / Bearer JWT)
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                       BACKEND (Node.js + Express)                      │
+│                                                                        │
+│  /api/auth          - Register, Login, Google OAuth, Profile (/me)     │
+│  /api/assessments   - Create, List, Detail, Preview, BorrowerIQ AI     │
+│  /api/contact       - Inquiries & Message Submissions                  │
+│  /api/feedback      - Idea / Problem / Other Categorized Feedback      │
+└───────────────────┬────────────────────────────────┬───────────────────┘
+                    │                                │
+                    ▼                                ▼
+       ┌────────────────────────┐       ┌────────────────────────┐
+       │   MySQL 8.0 Database   │       │   Google Gemini API    │
+       │   (Isolated Storage)   │       │   (Model Cascade)      │
+       └────────────────────────┘       └────────────────────────┘
 ```
 
 ---
 
 ## 💻 Tech Stack
 
-| Domain | Technology | Rationale |
+| Tier | Technology | Purpose |
 |---|---|---|
-| **Core Framework** | `React 19` | Modern concurrent rendering, clean state management, zero bundle bloat |
-| **Type Safety** | `TypeScript 5.7` (Strict) | Strict typing across the entire financial engine preventing calculation regressions |
-| **Styling & Tokens** | `Tailwind CSS 4.0` | Next-gen high-performance CSS engine with curated semantic color palette |
-| **Build Engine** | `Vite 6.0` | Sub-millisecond HMR and highly optimized production chunks |
-| **Icons** | `Lucide React` | Consistent, accessible stroke-based icon system |
-| **Typography** | `Inter` (Google Fonts) | Industry-standard tabular figures for precise financial figures |
+| **Frontend Framework** | `React 19` | Modern concurrent rendering, fast client-side state management |
+| **Frontend Styling** | `Tailwind CSS 4.0` | High-performance CSS engine with customized tokens |
+| **Build Tooling** | `Vite 6.0` | Lightning-fast development server and optimized production bundling |
+| **Backend Framework** | `Express 4.21` | REST API routes, authentication middleware, error handling |
+| **Runtime & Language** | `Node.js 18+` / `TypeScript 5.7` | Strict end-to-end type safety across engine and API contracts |
+| **Database** | `MySQL 8.0` (`mysql2/promise`) | Relational persistence with foreign keys and index optimization |
+| **Authentication** | `JWT` + `bcryptjs` + Google OAuth | Salted password hashing and secure token sessions |
+| **AI Integration** | `@google/genai` | Multi-model fallback cascade for BorrowerIQ insights |
+| **Icons & Typography** | `Lucide React` + `Inter` | Clean stroke iconography and legible tabular financial figures |
 
 ---
 
-## 📁 Directory Layout
+## 🗄️ Database Schema
+
+The backend uses a normalized MySQL database (`project3`) containing five core tables:
+
+1. **`users`** — User credentials (email, bcrypt password hash, Google ID, display name, created_at).
+2. **`assessments`** — Saved financial diagnostics with foreign key to `users(id)`, storing JSON inputs and calculated results.
+3. **`ai_summaries`** — BorrowerIQ insights associated with assessments, caching generated text and the model used.
+4. **`contact_inquiries`** — General support inquiries submitted through the Contact page.
+5. **`feedback`** — User feedback submitted via the floating widget, categorized by `ENUM('Idea', 'Problem', 'Other')`.
+
+---
+
+## 📁 Repository Structure
 
 ```
-Lokta/
-├── index.html                   # HTML5 entry with meta SEO & Inter font CDN
-├── package.json                 # Project dependencies and script declarations
-├── tsconfig.json                # Strict TypeScript configuration
-├── vite.config.ts               # Vite configuration with React and Tailwind plugins
+p3/
+├── README.md                    # Project documentation
+├── back-end/                    # Express + TypeScript Backend
+│   ├── src/
+│   │   ├── config/              # Database connection pool and environment validation
+│   │   ├── controllers/         # Auth, Assessment, Contact, Feedback controllers
+│   │   ├── middleware/          # JWT authentication and user validation
+│   │   ├── migrations/          # schema.sql database definition
+│   │   ├── routes/              # Express API route declarations
+│   │   ├── services/            # Gemini AI service, assessment services
+│   │   └── index.ts             # Express application entry point
+│   ├── package.json
+│   └── tsconfig.json
 │
-└── src/
-    ├── main.tsx                 # React DOM mount point
-    ├── App.tsx                  # App state router (Landing ➔ Questionnaire ➔ Results)
-    ├── index.css                # Tailwind design system tokens, themes, animations
-    │
-    ├── engine/                  # 🧠 Pure Financial Domain Engine (Zero React dependencies)
-    │   ├── index.ts             # Master assessBorrower() pipeline orchestration
-    │   ├── types.ts             # Strict domain schemas & calculation contracts
-    │   ├── affordability.ts     # Sustainable income haircuts, FOIR bands, EMI ceilings
-    │   ├── emi.ts               # Reducing-balance amortisation & inverse solvers
-    │   ├── interestRate.ts      # Product baseline bands + risk matrix adjustments
-    │   ├── apr.ts               # Newton-Raphson numerical APR convergence
-    │   ├── loanCapacity.ts      # Lender sanction vs borrower affordable capacities
-    │   ├── stressTest.ts        # Dual-shock vulnerability analysis
-    │   ├── confidence.ts        # Score reliability assessment
-    │   ├── recommendation.ts    # BORROW / BORROW_LESS / DONT_BORROW decision matrix
-    │   └── negotiation.ts       # Tailored negotiation leverage points generator
-    │
-    ├── components/              # 🎨 UI Presentation Layer
-    │   ├── LandingPage.tsx      # Hero, core value propositions, persona launchers
-    │   ├── Questionnaire.tsx    # 5-stage adaptive diagnostic flow
-    │   ├── ResultsPage.tsx      # Multi-widget dashboard with expandable explainers
-    │   └── NegotiationCard.tsx  # Clean, printable single-screen card for bank meetings
-    │
-    └── utils/
-        ├── formatters.ts        # Indian numbering (Lakh/Crore), currency & rate formatters
-        └── personas.ts          # Calibrated reference profiles (Priya, Ravi, Anita)
+└── front-end/                   # React 19 + TypeScript Frontend
+    ├── src/
+    │   ├── api/client.ts        # Typed API client for auth, assessment, feedback, contact
+    │   ├── components/          # UI components (Header, Footer, Modals, Pages, Widgets)
+    │   │   ├── AboutPage.tsx        # Purpose, Affordability vs Eligibility, Diagnostic Suite
+    │   │   ├── AiSummaryCard.tsx    # BorrowerIQ 5 Key Takeaways with bold styling
+    │   │   ├── AssessmentHistory.tsx # Saved diagnostic timeline
+    │   │   ├── AuthModal.tsx        # Login & registration modal with Google Sign-In
+    │   │   ├── ContactPage.tsx      # Contact form and expanded borrower FAQs
+    │   │   ├── FeedbackWidget.tsx   # Floating Send Feedback modal (Idea/Problem/Other)
+    │   │   ├── Footer.tsx           # 3-column layout, Ranjith ♡ credit, Privacy Policy link
+    │   │   ├── HeaderBrand.tsx      # Navigation, styled red logout, profile dropdown
+    │   │   ├── LandingPage.tsx      # Hero, verified privacy banner, demo personas
+    │   │   ├── LoginPage.tsx        # Standalone login view
+    │   │   ├── NegotiationCard.tsx  # Printable negotiation cheat-sheet
+    │   │   ├── PrivacyPolicyPage.tsx # Dedicated transparent privacy disclosures
+    │   │   ├── ProfileModal.tsx     # User profile editor
+    │   │   ├── Questionnaire.tsx    # 5-stage borrower diagnostic
+    │   │   ├── RegisterPage.tsx     # Standalone account creation view
+    │   │   └── ResultsPage.tsx      # Full diagnostic dashboard
+    │   ├── engine/              # Headless financial rules engine
+    │   ├── utils/               # Currency formatters, persona definitions
+    │   ├── App.tsx              # Main application router
+    │   └── main.tsx             # React mount
+    ├── package.json
+    └── vite.config.ts
 ```
 
 ---
@@ -179,33 +209,44 @@ Lokta/
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js `18.0.0` or higher
-- npm, pnpm, or yarn
+- **Node.js**: v18.0.0 or higher
+- **MySQL**: 8.0+ running on `localhost:3306`
+- **Google Gemini API Key**: from Google AI Studio
 
+### 1. Database Setup
+Create the MySQL database and run the schema migration:
+```sql
+CREATE DATABASE project3;
+USE project3;
+SOURCE back-end/src/migrations/schema.sql;
+```
+
+### 2. Backend Setup
 ```bash
-# 1. Clone repository
-git clone https://github.com/your-username/lokta.git
-
-# 2. Navigate to directory
-cd Lokta
-
-# 3. Install dependencies
+cd back-end
 npm install
 
-# 4. Start local development server
+# Create .env file with your credentials:
+# PORT=3000
+# DB_HOST=localhost
+# DB_PORT=3306
+# DB_USER=root
+# DB_PASSWORD=your_password
+# DB_NAME=project3
+# JWT_SECRET=your_jwt_secret
+# GEMINI_API_KEY=your_gemini_api_key
+
+npm run build
+npm start
+```
+
+### 3. Frontend Setup
+```bash
+cd front-end
+npm install
 npm run dev
 ```
-
-The application will be live at `http://localhost:5173/` in under 3 seconds.
-
-### Build for Production
-```bash
-# Type-check and compile optimized bundle
-npm run build
-
-# Preview production build locally
-npm run preview
-```
+Open `http://localhost:5173/` in your browser.
 
 ---
 
@@ -225,6 +266,7 @@ The application includes 3 instant-load borrower personas reflecting realistic I
 │                                                                                           │
 │ 🛵 Anita   Gig Delivery Worker (Hubballi) ₹1.5 Lakh          DON'T BORROW  Over-leveraged, │
 │           ₹28,000/mo · 3 App Loans       (Two-Wheeler)      (Safe: ₹0)    Bounce flags    │
+│                                                                                           │
 └───────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -233,7 +275,7 @@ The application includes 3 instant-load borrower personas reflecting realistic I
 ## 📐 Financial Rules Engine
 
 ### 1. Sustainable Income Calculation
-Instead of taking self-reported top-line income at face value, the engine applies sector-calibrated haircuts:
+Instead of taking top-line self-reported income at face value, the engine applies sector-calibrated haircuts:
 - **Salaried:** Fixed base (100%) + Variable/Bonus subjected to a **50% haircut**.
 - **Self-Employed:** Blended sustainable baseline:
   $$\text{Income}_{\text{sustainable}} = (0.60 \times \text{ITR}) + (0.25 \times \text{Typical Cash}) + (0.15 \times \text{Lowest Month})$$
@@ -251,7 +293,7 @@ Instead of taking self-reported top-line income at face value, the engine applie
 $$\text{Safe EMI} = \min\Big(\big(\text{Sustainable Income} \times \text{FOIR}\big) - \text{Existing EMIs},\; \text{Uncommitted Surplus} \times 0.85\Big)$$
 
 ### 3. All-In APR Solver (Newton-Raphson)
-True borrowing costs must reflect upfront loan origination fees and statutory taxes. The engine iteratively solves for the internal rate of return $r$ such that:
+True borrowing costs must reflect upfront loan origination fees and statutory taxes:
 
 $$\text{Principal} - \text{Total Upfront Fees} = \sum_{t=1}^{n} \frac{\text{EMI}}{(1 + r)^t}$$
 
@@ -261,31 +303,20 @@ Where $\text{Total Upfront Fees} = (\text{Principal} \times \text{Processing Fee
 
 ---
 
-## 🔒 Zero-Knowledge Privacy
+## 🔒 Privacy & Security Commitment
 
-Borrower Copilot is built on privacy-preserving principles:
-
-- 🚫 **No Server, No Database** — 100% of runtime computation occurs within the user's browser runtime.
-- 🚫 **Zero External API Calls** — No credit bureau pings (no soft or hard inquiries on your CIBIL/Experian file).
-- 🚫 **No PII Collection** — Never asks for Name, Phone Number, Aadhaar, PAN, or Bank Account Credentials.
-- 🚫 **Ephemeral Lifecycle** — Close the browser tab, and all in-memory diagnostic state is instantly purged.
-
----
-
-## 🔮 What Could Be Built Next
-
-- [ ] Direct bank rate-sheet API scraping for live comparison
-- [ ] OCR bank statement parsing via client-side WebAssembly
-- [ ] Multi-scenario side-by-side loan tenure simulation
-- [ ] Direct PDF vector export for the Negotiation Card
-- [ ] Localized regional cost-of-living index offsets (Tier 1 vs Tier 2/3)
+- 🚫 **Zero Credit Bureau Impact** — Never triggers hard or soft inquiries on your CIBIL or Experian file.
+- 🚫 **No Sensitive Identity Docs** — Never requests or stores PAN cards, Aadhaar numbers, or passport copies.
+- 🚫 **No Banking Credentials** — Never asks for net-banking logins, debit card details, UPI PINs, or OTPs.
+- 🛡️ **Isolated MySQL Storage** — Assessments are saved with row-level user isolation and bcrypt password encryption.
+- 🚫 **Zero Lead Monetization** — We never sell, lease, or broker your information to lenders or telemarketing agencies.
 
 ---
 
-## 📄 License
+## 📄 License & Credit
 
-Distributed under the **MIT License**. See `LICENSE` for more information.
+Distributed under the **MIT License**.
 
-<div align="center">
-  <sub>Built with precision for Indian retail borrowers.</sub>
-</div>
+```
+© 2026 Borrower Copilot · Built independently by Ranjith ❤️
+```

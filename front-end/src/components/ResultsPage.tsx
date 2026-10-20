@@ -5,8 +5,6 @@ import {
   AlertTriangle,
   XCircle,
   CheckCircle,
-  ChevronDown,
-  ChevronUp,
   RotateCcw,
   CreditCard,
   Info,
@@ -14,6 +12,7 @@ import {
   Calendar,
   Activity,
   Eye,
+  Sparkles,
 } from 'lucide-react';
 import type { AssessmentResult, AssessmentInput } from '../engine/types';
 import {
@@ -28,17 +27,43 @@ import {
 } from '../utils/formatters';
 import { NegotiationCard } from './NegotiationCard';
 import { HeaderBrand } from './HeaderBrand';
+import { AiSummaryCard } from './AiSummaryCard';
+import { Footer } from './Footer';
+import type { User as UserType } from '../api/client';
 
 interface ResultsPageProps {
   result: AssessmentResult;
   input: AssessmentInput;
+  assessmentId?: number;
+  initialSummary?: {
+    text: string;
+    createdAt?: string;
+  } | null;
+  isDemo?: boolean;
+  onSaveAssessment?: () => void;
   onStartOver: () => void;
   onHome?: () => void;
+  onNavigate?: (screen: 'landing' | 'about' | 'contact' | 'history' | 'login' | 'privacy') => void;
+  user?: UserType | null;
+  onLogout?: () => void;
+  onOpenProfile?: () => void;
 }
 
-export function ResultsPage({ result, input, onStartOver, onHome }: ResultsPageProps) {
+export function ResultsPage({
+  result,
+  input,
+  assessmentId,
+  initialSummary,
+  isDemo,
+  onSaveAssessment,
+  onStartOver,
+  onHome,
+  onNavigate,
+  user,
+  onLogout,
+  onOpenProfile,
+}: ResultsPageProps) {
   const [showNegotiationCard, setShowNegotiationCard] = useState(false);
-  const [expandedExplanations, setExpandedExplanations] = useState(false);
 
   const recColors = getRecommendationColor(result.recommendation);
   const confColors = getConfidenceColor(result.confidence);
@@ -56,16 +81,48 @@ export function ResultsPage({ result, input, onStartOver, onHome }: ResultsPageP
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-primary-50">
       {/* Header */}
       <header className="border-b border-slate-100 bg-white/70 backdrop-blur-sm sticky top-0 z-10 no-print">
-        <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
-          <HeaderBrand onClick={onHome} />
-          <button onClick={onStartOver} className="btn-ghost flex items-center gap-1.5" id="start-over">
-            <RotateCcw className="w-4 h-4" />
-            Start Over
-          </button>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
+          <HeaderBrand
+            onClick={onHome}
+            onNavigate={onNavigate}
+            user={user}
+            onLogout={onLogout}
+            onOpenProfile={onOpenProfile}
+            activeScreen="results"
+            rightAction={
+              <button
+                onClick={onStartOver}
+                className="btn-ghost text-xs sm:text-sm py-2 px-3 flex items-center gap-1.5 shrink-0 rounded-xl cursor-pointer border border-slate-200 whitespace-nowrap"
+                id="start-over"
+              >
+                <RotateCcw className="w-4 h-4" />
+                <span>Start Over</span>
+              </button>
+            }
+          />
         </div>
       </header>
 
       <main className="max-w-3xl mx-auto px-4 py-8 space-y-6">
+        {/* ── Demo Notice ──────────────────────────────────────────────── */}
+        {isDemo && (
+          <div className="p-3.5 bg-amber-50 border border-amber-200 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-amber-900 animate-fade-in">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-amber-600 shrink-0" />
+              <span><strong>Sample Persona Preview:</strong> This visit is for demo evaluation and is not added to your saved assessments.</span>
+            </div>
+            {onSaveAssessment && (
+              <button
+                type="button"
+                onClick={onSaveAssessment}
+                className="self-end sm:self-auto px-3 py-1 bg-white border border-amber-300 rounded-lg font-bold text-amber-800 hover:bg-amber-100/50 cursor-pointer text-xs shrink-0"
+              >
+                Save to My Assessments
+              </button>
+            )}
+          </div>
+        )}
+
         {/* ── Recommendation Banner ─────────────────────────────────────── */}
         <div className={`card ${recColors.bgLight} border-2 ${recColors.border} animate-fade-in-up`}>
           <div className="flex items-start gap-4">
@@ -387,38 +444,20 @@ export function ResultsPage({ result, input, onStartOver, onHome }: ResultsPageP
           </ul>
         </div>
 
-        {/* ── All Explanations ──────────────────────────────────────────── */}
-        <div className="card animate-fade-in-up delay-500">
-          <button
-            onClick={() => setExpandedExplanations(!expandedExplanations)}
-            className="card-header w-full justify-between cursor-pointer mb-0"
-          >
-            <span className="flex items-center gap-2">
-              <Info className="w-5 h-5 text-primary-500" />
-              All Explanations ({result.explanations.length})
-            </span>
-            {expandedExplanations ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
-          </button>
-
-          {expandedExplanations && (
-            <ul className="mt-4 space-y-3">
-              {result.explanations.map((exp, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
-                  <span className="w-5 h-5 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center shrink-0 text-xs font-bold">
-                    {i + 1}
-                  </span>
-                  {exp}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        {/* ── AI Financial Summary Card ─────────────────────────────────── */}
+        <AiSummaryCard
+          assessmentId={assessmentId}
+          initialSummary={initialSummary}
+          isDemo={isDemo}
+          input={input}
+          result={result}
+        />
 
         {/* ── Transparency Strip ────────────────────────────────────────── */}
         <div className="p-4 bg-slate-800 text-white rounded-2xl text-center text-sm animate-fade-in delay-500">
           <Shield className="w-4 h-4 text-emerald-400 inline mr-2" />
-          Your assessment was calculated locally in your browser. No data was stored or transmitted.
-          This is not a loan approval.
+          Your assessment is calculated using transparent financial formulas and stored securely in your private account.
+          This is an independent advisory diagnostic, not a lender loan approval.
         </div>
 
         {/* ── Action Buttons ────────────────────────────────────────────── */}
@@ -441,6 +480,9 @@ export function ResultsPage({ result, input, onStartOver, onHome }: ResultsPageP
           </button>
         </div>
       </main>
+
+      {/* Footer */}
+      <Footer onNavigate={onNavigate} />
     </div>
   );
 }

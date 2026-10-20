@@ -12,24 +12,41 @@ import type { AssessmentInput } from '../engine/types';
 import { PERSONAS } from '../utils/personas';
 
 import { HeaderBrand } from './HeaderBrand';
+import { Footer } from './Footer';
+import type { User as UserType } from '../api/client';
 
 interface LandingPageProps {
   onStart: () => void;
   onLoadPersona: (input: AssessmentInput) => void;
   onHome?: () => void;
+  user?: UserType | null;
+  onNavigate?: (screen: 'landing' | 'about' | 'contact' | 'history' | 'login' | 'privacy') => void;
+  onLogout?: () => void;
+  onOpenProfile?: () => void;
 }
 
-export function LandingPage({ onStart, onLoadPersona, onHome }: LandingPageProps) {
+export function LandingPage({
+  onStart,
+  onLoadPersona,
+  onHome,
+  user,
+  onNavigate,
+  onLogout,
+  onOpenProfile,
+}: LandingPageProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-primary-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-primary-50 flex flex-col">
       {/* Header */}
       <header className="border-b border-slate-100 bg-white/70 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-          <HeaderBrand onClick={onHome} />
-          <div className="flex items-center gap-1.5 text-xs text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full">
-            <Shield className="w-3.5 h-3.5" />
-            <span>100% Private</span>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
+          <HeaderBrand
+            onClick={onHome}
+            onNavigate={onNavigate}
+            user={user}
+            onLogout={onLogout}
+            onOpenProfile={onOpenProfile}
+            activeScreen="landing"
+          />
         </div>
       </header>
 
@@ -51,7 +68,7 @@ export function LandingPage({ onStart, onLoadPersona, onHome }: LandingPageProps
 
           <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">
             Answer four essential questions before speaking to a lender.
-            Get a personal Negotiation Card with transparent, explainable numbers — no login, no credit check, no data stored.
+            Get a personal Negotiation Card with transparent, explainable numbers and AI financial summaries — stored securely in your private account with zero credit bureau impact.
           </p>
 
           <button
@@ -94,10 +111,10 @@ export function LandingPage({ onStart, onLoadPersona, onHome }: LandingPageProps
 
         {/* Privacy Strip */}
         <div className="mt-12 text-center animate-fade-in delay-300">
-          <div className="inline-flex flex-col sm:flex-row items-center gap-4 bg-slate-800 text-white px-6 py-4 rounded-2xl shadow-lg">
+          <div className="inline-flex flex-col sm:flex-row items-center gap-3 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-lg max-w-2xl border border-slate-800">
             <Shield className="w-5 h-5 text-emerald-400 shrink-0" />
-            <p className="text-sm font-medium">
-              No login. No bureau pull. No personal data stored. Your assessment is calculated locally in your browser.
+            <p className="text-sm font-medium text-slate-200 text-center sm:text-left leading-relaxed">
+              Zero credit bureau impact • 100% private financial diagnostics. We never pull your CIBIL score or sell your data to lenders. Your numbers stay securely isolated in your private account.
             </p>
           </div>
         </div>
@@ -130,9 +147,7 @@ export function LandingPage({ onStart, onLoadPersona, onHome }: LandingPageProps
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-100 py-6 text-center text-sm text-slate-400">
-        <p>Borrower Copilot — A borrower decision-support tool. Not a loan approval system.</p>
-      </footer>
+      <Footer onNavigate={onNavigate} />
     </div>
   );
 }
