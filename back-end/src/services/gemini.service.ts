@@ -3,26 +3,36 @@ import { env } from '../config/env.js';
 import type { AssessmentInput, AssessmentResult } from '../engine/types.js';
 
 const SYSTEM_INSTRUCTION = `You are an expert, empathetic borrower advocate and personal financial copilot for Indian families.
-Your mission is to write exactly 5 concise, plain-English takeaway points for the borrower.
+Your mission is to write exactly 5 personalized, plain-English takeaway points for the borrower.
 
 CRITICAL RULES:
-1. OUTPUT EXACTLY 5 NUMBERED POINTS (1 to 5):
+1. ALWAYS CITE THE BORROWER'S REAL NUMBERS:
+   - In EVERY point, you MUST mention their specific Rupee amounts (₹), percentages, or tenure years from the Assessment Data.
+   - Do NOT write generic or vague advice. Every point must feel custom-tailored to their exact financial numbers.
+
+2. STRUCTURE THE 5 POINTS DYNAMICALLY:
+   - Point 1 (Monthly Cash Flow Reality):
+     Quote their exact monthly income, rent, living expenses, and show what leftover cash remains (₹ amount) after paying the requested monthly payment (EMI).
+   - Point 2 (Verdict & Safe Borrowing Limit):
+     - If BORROW: State why their requested loan of ₹X is safely below their safe borrowing capacity of ₹Y, and warn against accepting aggressive bank offers of ₹Z.
+     - If BORROW_LESS: Clearly contrast their requested loan of ₹X against the safe limit of ₹Y, explaining how much they need to cut down.
+     - If DONT_BORROW: Explain the dangerous cash shortfall or high-cost debt trap they face if they take this loan.
+   - Point 3 (Emergency Buffer & Stress Test Reality):
+     Quote their emergency savings (₹X) and state what happens during the 15% income shock (quote the exact leftover ₹ surplus or deficit from the stress test).
+   - Point 4 (Actionable Adjustment Tailored to Their Situation):
+     - If BORROW: State their fair interest rate band (quote X% to Y%) and explain how tenure choices affect total interest.
+     - If BORROW_LESS: Give a concrete adjustment (e.g., increase down payment or stretch tenure from X to Y years to bring the payment down to the safe ₹ limit).
+     - If DONT_BORROW: Give immediate debt recovery advice (clearing high-interest credit card/app debt or building 3 months of emergency savings before taking any loan).
+   - Point 5 (Bank Negotiation Defense):
+     Give a specific talking point to use at the bank branch: tell them to reject unnecessary lender-bundled insurance packages (which can add ₹20,000–₹50,000 to the debt) and ask for a 100% waiver on bank processing fees.
+
+3. CLEAN PLAIN TEXT ONLY:
+   - Output exactly 5 numbered points (1 to 5).
    - Keep each point crisp (1-2 sentences), natural, and direct.
    - DO NOT USE ANY MARKDOWN ASTERISKS OR STARS (no **bold**, no *italics*, no * bullets). Output clean plain text only.
-2. BAN ALL TECHNICAL JARGON:
-   - Do NOT use terms like "APR", "FOIR", "DTI", "amortization", "verdict", "ceiling", "debt service ratio", or "stress test scenario".
-   - Use plain, everyday terms:
-     * Instead of "APR", say "total loan cost including bank processing charges".
-     * Instead of "safe EMI ceiling", say "safe monthly payment limit".
-     * Instead of "high-cost debt", say "expensive credit card dues or personal loans".
-3. DO NOT MERELY REPEAT RAW NUMBERS:
-   - Explain what the calculations realistically mean for daily living, savings, and peace of mind.
-4. THE 5 POINTS MUST COVER:
-   1. Household Budget Impact: What this payment means for daily living, rent, and monthly savings.
-   2. Bank Sales vs Your Protection: Why lenders push higher loan amounts to meet sales targets, and why sticking to your safe limit protects your family.
-   3. Emergency Buffer: Keeping your family safety savings untouched rather than draining them for loan fees or down payments.
-   4. Practical Adjustment Tip: How adjusting tenure or down payment keeps monthly payments comfortable.
-   5. Prepayment Defense and Add-on Trap: Warn about unnecessary lender-bundled insurance packages that inflate the loan amount and explain how making small early principal prepayments during the initial years dramatically cuts front-loaded interest without stressing monthly cash flow.`;
+4. BAN ALL TECHNICAL JARGON:
+   - Do NOT use terms like "APR", "FOIR", "DTI", "amortization", "verdict", "ceiling", or "debt service ratio".
+   - Use plain everyday terms: say "total loan cost with bank charges" instead of "APR", "safe monthly payment limit" instead of "safe EMI ceiling", and "expensive credit card dues" instead of "high-cost debt".`;
 
 const CANDIDATE_MODELS = [
   'gemini-3.5-flash-lite',
@@ -48,18 +58,28 @@ export async function generateAiSummary(
 
   const ai = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
 
-  const promptContent = `Assessment Data:
-- Borrower: Age ${input?.borrower?.age ?? 'N/A'}, ${input?.borrower?.employmentType ?? 'N/A'}, Monthly Income ₹${input?.borrower?.monthlyIncome ?? 'N/A'}
-- Loan Purpose: ${input?.loan?.purpose ?? 'N/A'}, Requested Amount: ₹${input?.loan?.requestedAmount ?? 'N/A'}, Tenure: ${input?.loan?.tenure ?? 'N/A'} years
-- Financials: Existing EMI ₹${input?.financial?.existingEmi ?? 0}, Expenses ₹${input?.financial?.householdExpenses ?? 0}, Rent ₹${input?.financial?.rent ?? 0}
+  const monthlyIncome = Number(input?.borrower?.monthlyIncome) || 0;
+  const rent = Number(input?.financial?.rent) || 0;
+  const expenses = Number(input?.financial?.householdExpenses) || 0;
+  const existingEmi = Number(input?.financial?.existingEmi) || 0;
+  const requestedEmi = Number(result?.requestedEmi) || 0;
+  const safeEmi = Number(result?.safeEmi) || 0;
+  const emergencySavings = Number(input?.financial?.emergencySavings) || 0;
+  const leftoverCash = monthlyIncome - (rent + expenses + existingEmi + requestedEmi);
+
+  const promptContent = `Assessment Data for Borrower:
+- Profile: Age ${input?.borrower?.age ?? 'N/A'}, ${input?.borrower?.employmentType ?? 'N/A'}, Monthly Income ₹${monthlyIncome.toLocaleString('en-IN')}
+- Loan Request: Purpose: ${input?.loan?.purpose ?? 'personal'}, Requested Amount: ₹${Number(input?.loan?.requestedAmount || 0).toLocaleString('en-IN')}, Tenure: ${input?.loan?.tenure ?? 3} years
+- Monthly Commitments: Rent ₹${rent.toLocaleString('en-IN')}, Household Living Expenses ₹${expenses.toLocaleString('en-IN')}, Existing EMIs ₹${existingEmi.toLocaleString('en-IN')}
+- Emergency Savings: ₹${emergencySavings.toLocaleString('en-IN')}
+- Safe Limits vs Requested:
+  * Safe Monthly Payment Limit: ₹${safeEmi.toLocaleString('en-IN')} (vs Requested Monthly Payment: ₹${requestedEmi.toLocaleString('en-IN')})
+  * Safe Loan Capacity: ₹${Number(result?.borrowerSafeAmount || 0).toLocaleString('en-IN')} (Bank Sales Indicative: ₹${Number(result?.lenderIndicativeAmount || 0).toLocaleString('en-IN')})
+  * Monthly Cash Leftover After Requested Loan & All Bills: ₹${leftoverCash.toLocaleString('en-IN')}
 - Recommendation: ${result?.recommendation ?? 'BORROW'} (${result?.recommendationReason ?? ''})
-- Safe Borrowing Amount: ₹${result?.borrowerSafeAmount ?? 'N/A'} (Lender Indicative: ₹${result?.lenderIndicativeAmount ?? 'N/A'}, Recommended: ₹${result?.recommendedAmount ?? 'N/A'})
-- Safe Monthly EMI Ceiling: ₹${result?.safeEmi ?? 'N/A'} (Requested EMI: ₹${result?.requestedEmi ?? 'N/A'})
-- Fair Interest Rate Range: ${result?.fairRateMin ?? ''}% - ${result?.fairRateMax ?? ''}%
-- APR Range: ${result?.estimatedAprMin ?? ''}% - ${result?.estimatedAprMax ?? ''}%
-- Confidence: ${result?.confidence ?? 'MEDIUM'}
-- High Cost Debt: ${result?.highCostDebtWarning ? result?.highCostDebtMessage || 'Warning present' : 'None'}
-- Stress Test Scenario: ${result?.stressTest?.scenario || 'Standard'} (Manageable: ${result?.stressTest?.isManageable ? 'Yes' : 'No'} - ${result?.stressTest?.explanation || ''})
+- Fair Interest Rate Band: ${result?.fairRateMin ?? ''}% - ${result?.fairRateMax ?? ''}% (Total cost APR with fees: ${result?.estimatedAprMin ?? ''}% - ${result?.estimatedAprMax ?? ''}%)
+- High Cost Debt Warning: ${result?.highCostDebtWarning ? result?.highCostDebtMessage || 'Active credit card or high-cost loan app dues detected' : 'None'}
+- Stress Test (15% Income Shock): Manageable: ${result?.stressTest?.isManageable ? 'Yes' : 'No'} - ${result?.stressTest?.explanation || ''}
 - Explanations: ${Array.isArray(result?.explanations) ? result.explanations.join('; ') : ''}`;
 
   let lastError: unknown = null;
