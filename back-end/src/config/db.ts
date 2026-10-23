@@ -16,9 +16,7 @@ export const pool = mysql.createPool({
 
 export async function testDbConnection(): Promise<boolean> {
   try {
-    const connection = await pool.getConnection();
-    await connection.ping();
-    connection.release();
+    await pool.query('SELECT 1');
     return true;
   } catch (err) {
     console.error('MySQL connection error:', err);
