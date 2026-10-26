@@ -130,11 +130,21 @@ export function AiSummaryCard({
 
       setSummaryData(res);
     } catch (err: unknown) {
-      // Sanitized error — never expose model names or technical codes
+      console.error('[BorrowerIQ Error]:', err);
       const rawMsg = err instanceof Error ? err.message : '';
       let friendlyError = 'BorrowerIQ insights are currently experiencing high demand. Please try again in a few moments.';
-      if (rawMsg.includes('hourly rate limit') || rawMsg.includes('limit reached')) {
-        friendlyError = 'You have reached the summary generation limit for this assessment. Please check back later.';
+      if (
+        rawMsg.includes('hourly rate limit') ||
+        rawMsg.includes('limit reached') ||
+        rawMsg.includes('Too many') ||
+        rawMsg.includes('per hour') ||
+        rawMsg.includes('429')
+      ) {
+        friendlyError = 'You have reached the summary generation limit (5 requests per hour). Please try again in a little while.';
+      } else if (rawMsg.includes('timed out') || rawMsg.includes('timeout') || rawMsg.includes('AbortError')) {
+        friendlyError = 'Generating insights took longer than expected due to network latency. Please click Retry.';
+      } else if (rawMsg.includes('Assessment data is missing')) {
+        friendlyError = rawMsg;
       }
       setError(friendlyError);
     } finally {

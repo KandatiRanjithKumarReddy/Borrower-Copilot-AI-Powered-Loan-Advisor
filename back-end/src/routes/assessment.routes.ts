@@ -11,10 +11,12 @@ import {
 
 const router = Router();
 
-// Per-user rate limiter for AI summary generation: 5 requests per user per hour
+const isDev = process.env.NODE_ENV !== 'production';
+
+// Per-user rate limiter for AI summary generation: 30/hr in dev, 5/hr in prod
 const aiSummaryLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: 5,
+  max: isDev ? 30 : 5,
   keyGenerator: (req) => String((req as AuthRequest).user?.id || req.ip),
   message: {
     error: 'Too many AI summary requests. Limit is 5 requests per hour per user. Please try again later.',
@@ -23,10 +25,10 @@ const aiSummaryLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// Rate limiter for unauthenticated preview AI summaries: 10 requests per IP per hour
+// Rate limiter for unauthenticated preview AI summaries: 30/hr in dev, 10/hr in prod
 const previewSummaryLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: 10,
+  max: isDev ? 30 : 10,
   message: {
     error: 'Too many preview AI summary requests. Please sign in or try again in an hour.',
   },

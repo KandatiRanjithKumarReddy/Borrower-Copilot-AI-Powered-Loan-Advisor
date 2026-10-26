@@ -75,7 +75,11 @@ export function setToken(token: string | null): void {
   }
 }
 
-async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+async function request<T>(
+  endpoint: string,
+  options: RequestInit = {},
+  timeoutMs = 15000
+): Promise<T> {
   const url = `${API_BASE}${endpoint}`;
   const token = getToken();
 
@@ -89,7 +93,6 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
   }
 
   const controller = new AbortController();
-  const timeoutMs = 15000; // 15-second network timeout
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
@@ -193,19 +196,27 @@ export async function getAssessment(id: number): Promise<AssessmentDetailRespons
 
 export async function generateAiSummary(id: number, force = false): Promise<AiSummaryResponse> {
   const url = force ? `/api/assessments/${id}/ai-summary?force=true` : `/api/assessments/${id}/ai-summary`;
-  return request<AiSummaryResponse>(url, {
-    method: 'POST',
-  });
+  return request<AiSummaryResponse>(
+    url,
+    {
+      method: 'POST',
+    },
+    60000 // 60-second timeout for AI insights generation
+  );
 }
 
 export async function generatePreviewAiSummary(
   input: AssessmentInput,
   result: AssessmentResult
 ): Promise<AiSummaryResponse> {
-  return request<AiSummaryResponse>('/api/assessments/preview-summary', {
-    method: 'POST',
-    body: JSON.stringify({ input, result }),
-  });
+  return request<AiSummaryResponse>(
+    '/api/assessments/preview-summary',
+    {
+      method: 'POST',
+      body: JSON.stringify({ input, result }),
+    },
+    60000 // 60-second timeout for AI insights generation
+  );
 }
 
 // ── Contact API ──────────────────────────────────────────────────────────────
