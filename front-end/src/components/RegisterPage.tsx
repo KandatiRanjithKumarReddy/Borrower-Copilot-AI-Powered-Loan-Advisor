@@ -4,7 +4,7 @@ import { register, type User as UserType } from '../api/client';
 import { HeaderBrand } from './HeaderBrand';
 
 interface RegisterPageProps {
-  onSuccess: (user: UserType) => void;
+  onSuccess: (user: UserType, action?: 'login' | 'register') => void;
   onSwitchToLogin: () => void;
   onClose?: () => void;
 }
@@ -35,7 +35,7 @@ export function RegisterPage({ onSuccess, onSwitchToLogin, onClose }: RegisterPa
       setLoading(true);
       setError(null);
       const res = await register(name.trim(), email.trim(), password);
-      onSuccess(res.user);
+      onSuccess(res.user, 'register');
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Registration failed. Please try again.';
       setError(msg);

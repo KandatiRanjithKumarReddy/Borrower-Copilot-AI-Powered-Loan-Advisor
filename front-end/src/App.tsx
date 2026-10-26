@@ -18,6 +18,7 @@ import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { FeedbackWidget } from './components/FeedbackWidget';
 import { AuthModal } from './components/AuthModal';
 import { ProfileModal } from './components/ProfileModal';
+import { Toast } from './components/Toast';
 import { Loader2 } from 'lucide-react';
 
 type AppScreen =
@@ -51,6 +52,12 @@ export default function App() {
   // Pending action to execute after successful login
   const [pendingAssessmentInput, setPendingAssessmentInput] = useState<AssessmentInput | null>(null);
 
+  // Toast Notifications
+  const [toast, setToast] = useState<{
+    message: string;
+    type: 'success' | 'error' | 'info';
+  } | null>(null);
+
   // Check auth on mount
   useEffect(() => {
     async function checkAuth() {
@@ -70,6 +77,12 @@ export default function App() {
     logout();
     setUser(null);
     setShowProfileModal(false);
+    setPendingAssessmentInput(null);
+    setShowAuthModal(false);
+    setToast({
+      message: 'You have been logged out successfully. See you again!',
+      type: 'info',
+    });
     if (screen === 'history') {
       setScreen('landing');
     }
@@ -151,9 +164,22 @@ export default function App() {
   }, [assessmentInput, user, handleAssessmentExecution]);
 
   const handleAuthSuccess = useCallback(
-    (loggedInUser: User) => {
+    (loggedInUser: User, action: 'login' | 'register' = 'login') => {
       setUser(loggedInUser);
       setShowAuthModal(false);
+
+      if (action === 'register') {
+        setToast({
+          message: 'Account created successfully! Welcome to Borrower Copilot.',
+          type: 'success',
+        });
+      } else {
+        setToast({
+          message: "Welcome back! You've logged in successfully.",
+          type: 'success',
+        });
+      }
+
       if (pendingAssessmentInput) {
         const input = pendingAssessmentInput;
         setPendingAssessmentInput(null);
@@ -343,6 +369,15 @@ export default function App() {
 
       {/* Floating Send Feedback Widget - accessible globally across all views */}
       <FeedbackWidget />
+
+      {/* Toast Notification Alert */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
     </div>
   );
 }

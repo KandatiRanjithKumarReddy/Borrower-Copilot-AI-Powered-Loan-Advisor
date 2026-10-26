@@ -168,6 +168,11 @@ export async function googleLogin(payload: {
 
 export function logout(): void {
   setToken(null);
+  try {
+    sessionStorage.clear();
+  } catch {
+    // Ignore in environments where sessionStorage might be restricted
+  }
 }
 
 // ── Assessment APIs ──────────────────────────────────────────────────────────

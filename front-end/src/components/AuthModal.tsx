@@ -7,7 +7,7 @@ const GOOGLE_CLIENT_ID = (import.meta as any).env?.VITE_GOOGLE_CLIENT_ID || '';
 
 interface AuthModalProps {
   initialMode?: 'login' | 'register';
-  onSuccess: (user: User) => void;
+  onSuccess: (user: User, action?: 'login' | 'register') => void;
   onClose?: () => void;
 }
 
@@ -23,6 +23,16 @@ export function AuthModal({
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const formatAuthError = (err: unknown, defaultFallback: string) => {
+    if (err instanceof Error && err.message) {
+      if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
+        return 'Unable to reach the server. Please check your internet connection.';
+      }
+      return err.message;
+    }
+    return defaultFallback;
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -45,9 +55,9 @@ export function AuthModal({
       try {
         setLoading(true);
         const res = await register(name.trim(), email.trim(), password);
-        onSuccess(res.user);
+        onSuccess(res.user, 'register');
       } catch (err: unknown) {
-        setError(err instanceof Error ? err.message : 'Registration failed.');
+        setError(formatAuthError(err, 'Failed to create your account. Please try again.'));
       } finally {
         setLoading(false);
       }
@@ -60,9 +70,9 @@ export function AuthModal({
       try {
         setLoading(true);
         const res = await login(email.trim(), password);
-        onSuccess(res.user);
+        onSuccess(res.user, 'login');
       } catch (err: unknown) {
-        setError(err instanceof Error ? err.message : 'Invalid credentials. Please try again.');
+        setError(formatAuthError(err, 'Invalid email or password. Please try again.'));
       } finally {
         setLoading(false);
       }
@@ -83,9 +93,9 @@ export function AuthModal({
                   setGoogleLoading(true);
                   setError(null);
                   const res = await googleLogin({ credential: response.credential });
-                  onSuccess(res.user);
+                  onSuccess(res.user, mode === 'register' ? 'register' : 'login');
                 } catch (err: unknown) {
-                  setError(err instanceof Error ? err.message : 'Google authentication failed.');
+                  setError(formatAuthError(err, 'Google authentication failed. Please try again.'));
                 } finally {
                   setGoogleLoading(false);
                 }

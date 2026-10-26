@@ -4,7 +4,7 @@ import { login, type User } from '../api/client';
 import { HeaderBrand } from './HeaderBrand';
 
 interface LoginPageProps {
-  onSuccess: (user: User) => void;
+  onSuccess: (user: User, action?: 'login' | 'register') => void;
   onSwitchToRegister: () => void;
   onClose?: () => void;
 }
@@ -26,7 +26,7 @@ export function LoginPage({ onSuccess, onSwitchToRegister, onClose }: LoginPageP
       setLoading(true);
       setError(null);
       const res = await login(email, password);
-      onSuccess(res.user);
+      onSuccess(res.user, 'login');
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Invalid credentials. Please try again.';
       setError(msg);
