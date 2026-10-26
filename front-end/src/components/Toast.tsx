@@ -12,7 +12,7 @@ export function Toast({
   message,
   type = 'success',
   onClose,
-  duration = 3000,
+  duration = 2000,
 }: ToastProps) {
   useEffect(() => {
     if (duration <= 0) return;
