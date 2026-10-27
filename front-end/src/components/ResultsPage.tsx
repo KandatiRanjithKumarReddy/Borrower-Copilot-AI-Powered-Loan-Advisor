@@ -80,8 +80,8 @@ export function ResultsPage({
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-primary-50">
       {/* Header */}
-      <header className="border-b border-slate-100 bg-white/70 backdrop-blur-sm sticky top-0 z-10 no-print">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
+      <header className="border-b border-slate-200/80 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md sticky top-0 z-40 shadow-2xs no-print">
+        <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-3 sm:py-4">
           <HeaderBrand
             onClick={onHome}
             onNavigate={onNavigate}
@@ -92,11 +92,11 @@ export function ResultsPage({
             rightAction={
               <button
                 onClick={onStartOver}
-                className="btn-ghost text-xs sm:text-sm py-2 px-3 flex items-center gap-1.5 shrink-0 rounded-xl cursor-pointer border border-slate-200 whitespace-nowrap"
+                className="btn-ghost text-xs sm:text-sm py-1.5 sm:py-2 px-2.5 sm:px-3 flex items-center gap-1.5 shrink-0 rounded-xl cursor-pointer border border-slate-200 dark:border-zinc-700 whitespace-nowrap"
                 id="start-over"
               >
-                <RotateCcw className="w-4 h-4" />
-                <span>Start Over</span>
+                <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                <span className="hidden xs:inline">Start Over</span>
               </button>
             }
           />
@@ -106,16 +106,16 @@ export function ResultsPage({
       <main className="max-w-3xl mx-auto px-4 py-8 space-y-6">
         {/* ── Demo Notice ──────────────────────────────────────────────── */}
         {isDemo && (
-          <div className="p-3.5 bg-amber-50 border border-amber-200 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-amber-900 animate-fade-in">
+          <div className="p-3.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-amber-900 dark:text-amber-200 animate-fade-in">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-amber-600 shrink-0" />
+              <Sparkles className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
               <span><strong>Sample Persona Preview:</strong> This visit is for demo evaluation and is not added to your saved assessments.</span>
             </div>
             {onSaveAssessment && (
               <button
                 type="button"
                 onClick={onSaveAssessment}
-                className="self-end sm:self-auto px-3 py-1 bg-white border border-amber-300 rounded-lg font-bold text-amber-800 hover:bg-amber-100/50 cursor-pointer text-xs shrink-0"
+                className="self-end sm:self-auto px-3 py-1.5 bg-white dark:bg-zinc-900 border border-amber-300 dark:border-amber-700 rounded-lg font-bold text-amber-800 dark:text-amber-300 hover:bg-amber-100/50 dark:hover:bg-amber-900/40 cursor-pointer text-xs shrink-0 transition-colors"
               >
                 Save to My Assessments
               </button>
@@ -202,10 +202,10 @@ export function ResultsPage({
           </div>
 
           {/* Visual comparison bar */}
-          <div className="relative h-8 bg-slate-100 rounded-full overflow-hidden mb-3">
+          <div className="relative h-8 bg-slate-100 dark:bg-zinc-800 rounded-full overflow-hidden mb-3">
             {result.lenderIndicativeAmount > 0 && (
               <div
-                className="absolute inset-y-0 left-0 bg-blue-200 rounded-full"
+                className="absolute inset-y-0 left-0 bg-blue-200 dark:bg-blue-500/40 rounded-full"
                 style={{
                   width: `${Math.min(100, (result.lenderIndicativeAmount / Math.max(input.loan.requestedAmount, result.lenderIndicativeAmount, result.borrowerSafeAmount)) * 100)}%`,
                 }}
@@ -213,14 +213,14 @@ export function ResultsPage({
             )}
             {result.borrowerSafeAmount > 0 && (
               <div
-                className="absolute inset-y-0 left-0 bg-emerald-400/60 rounded-full"
+                className="absolute inset-y-0 left-0 bg-emerald-400/60 dark:bg-emerald-500/70 rounded-full"
                 style={{
                   width: `${Math.min(100, (result.borrowerSafeAmount / Math.max(input.loan.requestedAmount, result.lenderIndicativeAmount, result.borrowerSafeAmount)) * 100)}%`,
                 }}
               />
             )}
             <div
-              className="absolute top-0 bottom-0 w-0.5 bg-slate-800"
+              className="absolute top-0 bottom-0 w-0.5 bg-slate-800 dark:bg-white"
               style={{
                 left: `${Math.min(100, (input.loan.requestedAmount / Math.max(input.loan.requestedAmount, result.lenderIndicativeAmount, result.borrowerSafeAmount)) * 100)}%`,
               }}
@@ -228,8 +228,8 @@ export function ResultsPage({
           </div>
           <div className="flex justify-between text-xs text-slate-500">
             <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" /> Safe Amount</span>
-            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-200 inline-block" /> Lender Indicative</span>
-            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-slate-800 inline-block" /> Your Request</span>
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-200 dark:bg-blue-400 inline-block" /> Lender Indicative</span>
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-slate-800 dark:bg-white inline-block" /> Your Request</span>
           </div>
 
           {result.borrowerSafeAmount < input.loan.requestedAmount && result.borrowerSafeAmount > 0 && (

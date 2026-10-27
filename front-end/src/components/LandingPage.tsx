@@ -37,8 +37,8 @@ export function LandingPage({
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-primary-50 flex flex-col">
       {/* Header */}
-      <header className="border-b border-slate-100 bg-white/70 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
+      <header className="border-b border-slate-200/80 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md sticky top-0 z-40 shadow-2xs">
+        <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-3 sm:py-4">
           <HeaderBrand
             onClick={onHome}
             onNavigate={onNavigate}
@@ -122,23 +122,23 @@ export function LandingPage({
         {/* Quick Demo Personas */}
         <div className="mt-16 animate-fade-in-up delay-400">
           <div className="text-center mb-6">
-            <p className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Quick Demo</p>
-            <p className="text-slate-600 mt-1">Load a sample borrower profile to see the assessment instantly</p>
+            <p className="text-sm font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Quick Demo</p>
+            <p className="text-slate-600 dark:text-zinc-300 mt-1">Load a sample borrower profile to see the assessment instantly</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto">
             {Object.entries(PERSONAS).map(([key, persona]) => (
               <button
                 key={key}
                 onClick={() => onLoadPersona(persona.data)}
-                className="flex items-center gap-3 bg-white border-2 border-slate-200 hover:border-primary-300 rounded-xl px-4 py-3 transition-all duration-200 hover:shadow-md group cursor-pointer"
+                className="flex items-center gap-3 bg-white dark:bg-zinc-900/90 border-2 border-slate-200 dark:border-zinc-800 hover:border-primary-300 dark:hover:border-primary-500/80 rounded-xl px-4 py-3 transition-all duration-200 hover:shadow-md dark:hover:bg-zinc-900 group cursor-pointer"
                 id={`persona-${key}`}
               >
-                <div className="w-9 h-9 rounded-full bg-primary-100 flex items-center justify-center shrink-0 group-hover:bg-primary-200 transition-colors">
-                  <User className="w-4 h-4 text-primary-600" />
+                <div className="w-9 h-9 rounded-full bg-primary-100 dark:bg-primary-950/90 border border-primary-200/60 dark:border-primary-800/70 flex items-center justify-center shrink-0 group-hover:bg-primary-200 dark:group-hover:bg-primary-900/80 transition-colors">
+                  <User className="w-4 h-4 text-primary-600 dark:text-primary-400" />
                 </div>
                 <div className="text-left">
-                  <div className="font-semibold text-slate-800 text-sm">{persona.label}</div>
-                  <div className="text-xs text-slate-500">{persona.subtitle}</div>
+                  <div className="font-semibold text-slate-800 dark:text-white text-sm">{persona.label}</div>
+                  <div className="text-xs text-slate-500 dark:text-zinc-400">{persona.subtitle}</div>
                 </div>
               </button>
             ))}

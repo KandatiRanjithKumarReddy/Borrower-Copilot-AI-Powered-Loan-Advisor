@@ -83,8 +83,8 @@ export function ContactPage({
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-primary-50 flex flex-col">
       {/* Header */}
-      <header className="border-b border-slate-100 bg-white/80 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
+      <header className="border-b border-slate-200/80 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md sticky top-0 z-40 shadow-2xs">
+        <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-3 sm:py-4">
           <HeaderBrand
             onClick={onHome}
             onNavigate={onNavigate}
@@ -228,22 +228,22 @@ export function ContactPage({
                   return (
                     <div
                       key={index}
-                      className="border border-slate-200/80 rounded-xl overflow-hidden transition-all"
+                      className="border border-slate-200/80 dark:border-zinc-800 rounded-xl overflow-hidden transition-all"
                     >
                       <button
                         type="button"
                         onClick={() => setOpenFaq(isOpen ? null : index)}
-                        className="w-full text-left p-4 flex items-center justify-between gap-3 font-semibold text-sm sm:text-base text-slate-800 hover:bg-slate-50 transition-colors cursor-pointer"
+                        className="w-full text-left p-4 flex items-center justify-between gap-3 font-semibold text-sm sm:text-base text-slate-800 dark:text-white hover:bg-slate-50 dark:hover:bg-zinc-900/80 transition-colors cursor-pointer"
                       >
                         <span>{faq.question}</span>
                         {isOpen ? (
-                          <ChevronUp className="w-4 h-4 text-slate-500 shrink-0" />
+                          <ChevronUp className="w-4 h-4 text-slate-500 dark:text-zinc-400 shrink-0" />
                         ) : (
-                          <ChevronDown className="w-4 h-4 text-slate-500 shrink-0" />
+                          <ChevronDown className="w-4 h-4 text-slate-500 dark:text-zinc-400 shrink-0" />
                         )}
                       </button>
                       {isOpen && (
-                        <div className="p-4 pt-2 text-sm text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
+                        <div className="p-4 pt-2 text-sm text-slate-600 dark:text-zinc-300 leading-relaxed border-t border-slate-100 dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-900/50">
                           {faq.answer}
                         </div>
                       )}

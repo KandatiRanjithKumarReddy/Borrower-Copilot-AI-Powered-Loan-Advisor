@@ -21,8 +21,8 @@ export function PrivacyPolicyPage({
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-primary-50 flex flex-col">
       {/* Header */}
-      <header className="border-b border-slate-100 bg-white/80 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
+      <header className="border-b border-slate-200/80 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md sticky top-0 z-40 shadow-2xs">
+        <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-3 sm:py-4">
           <HeaderBrand
             onClick={onHome}
             onNavigate={onNavigate}
@@ -49,7 +49,7 @@ export function PrivacyPolicyPage({
 
         {/* Title */}
         <div className="mb-10 animate-fade-in-up">
-          <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4 border border-emerald-100">
+          <div className="inline-flex items-center gap-2 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-sm font-semibold px-4 py-1.5 rounded-full mb-4 border border-emerald-100 dark:border-emerald-800/70">
             <Shield className="w-4 h-4" />
             <span>Privacy & Data Protection Policy</span>
           </div>
@@ -67,7 +67,7 @@ export function PrivacyPolicyPage({
         {/* Key Principles Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
           <div className="card p-5 bg-white border border-slate-200/80 rounded-2xl shadow-xs">
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-3 border border-emerald-100/60 dark:border-emerald-800/60">
               <EyeOff className="w-5 h-5" />
             </div>
             <h3 className="font-bold text-slate-900 text-base mb-1">Zero Bureau Pulls</h3>
@@ -77,7 +77,7 @@ export function PrivacyPolicyPage({
           </div>
 
           <div className="card p-5 bg-white border border-slate-200/80 rounded-2xl shadow-xs">
-            <div className="w-10 h-10 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center mb-3">
+            <div className="w-10 h-10 rounded-xl bg-primary-50 dark:bg-primary-950/60 text-primary-600 dark:text-primary-400 flex items-center justify-center mb-3 border border-primary-100/60 dark:border-primary-800/60">
               <Lock className="w-5 h-5" />
             </div>
             <h3 className="font-bold text-slate-900 text-base mb-1">Strict Isolation</h3>
@@ -87,7 +87,7 @@ export function PrivacyPolicyPage({
           </div>
 
           <div className="card p-5 bg-white border border-slate-200/80 rounded-2xl shadow-xs">
-            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center mb-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-3 border border-amber-100/60 dark:border-amber-800/60">
               <Server className="w-5 h-5" />
             </div>
             <h3 className="font-bold text-slate-900 text-base mb-1">No Lead Brokering</h3>
@@ -122,14 +122,14 @@ export function PrivacyPolicyPage({
 
           {/* Section 2 */}
           <section className="pt-6 border-t border-slate-100">
-            <h2 className="text-xl font-bold text-slate-900 mb-3 flex items-center gap-2 text-emerald-700">
+            <h2 className="text-xl font-bold text-slate-900 mb-3 flex items-center gap-2 text-emerald-700 dark:text-emerald-400">
               <CheckCircle2 className="w-5 h-5" />
               <span>2. Sensitive Data We NEVER Request or Store</span>
             </h2>
             <p className="mb-3">
               To guarantee complete borrower safety, our platform is architected to operate without ever handling sensitive financial identifiers:
             </p>
-            <div className="p-4 rounded-xl bg-emerald-50/60 border border-emerald-100 text-sm space-y-2 text-emerald-900">
+            <div className="p-4 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-800/60 text-sm space-y-2 text-emerald-900 dark:text-emerald-200">
               <p>• <strong>NO Credit Bureau Integration:</strong> Your CIBIL score is never queried, monitored, or impacted.</p>
               <p>• <strong>NO Government Identity Documents:</strong> We never ask for your PAN Card, Aadhaar Number, Passport, or Voter ID.</p>
               <p>• <strong>NO Bank Logins or Credentials:</strong> We never request net-banking credentials, account numbers, debit card details, UPI PINs, or OTPs.</p>

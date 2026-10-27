@@ -5,9 +5,9 @@ import { submitFeedback } from '../api/client';
 type FeedbackCategory = 'Idea' | 'Problem' | 'Other';
 
 const CATEGORIES: { value: FeedbackCategory; label: string; icon: React.ReactNode; color: string }[] = [
-  { value: 'Idea', label: 'Idea', icon: <Lightbulb className="w-4 h-4" />, color: 'text-amber-600 bg-amber-50 border-amber-200 hover:bg-amber-100' },
-  { value: 'Problem', label: 'Problem', icon: <AlertTriangle className="w-4 h-4" />, color: 'text-danger-600 bg-danger-50 border-danger-200 hover:bg-danger-100' },
-  { value: 'Other', label: 'Other', icon: <HelpCircle className="w-4 h-4" />, color: 'text-primary-600 bg-primary-50 border-primary-200 hover:bg-primary-100' },
+  { value: 'Idea', label: 'Idea', icon: <Lightbulb className="w-4 h-4" />, color: 'text-amber-600 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/60 border-amber-200 dark:border-amber-700 hover:bg-amber-100 dark:hover:bg-amber-900/60' },
+  { value: 'Problem', label: 'Problem', icon: <AlertTriangle className="w-4 h-4" />, color: 'text-danger-600 dark:text-danger-300 bg-danger-50 dark:bg-danger-950/60 border-danger-200 dark:border-danger-700 hover:bg-danger-100 dark:hover:bg-danger-900/60' },
+  { value: 'Other', label: 'Other', icon: <HelpCircle className="w-4 h-4" />, color: 'text-primary-600 dark:text-primary-300 bg-primary-50 dark:bg-primary-950/60 border-primary-200 dark:border-primary-700 hover:bg-primary-100 dark:hover:bg-primary-900/60' },
 ];
 
 const MAX_CHARS = 2000;
@@ -84,26 +84,26 @@ export function FeedbackWidget() {
 
       {/* Modal Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-fade-in print:hidden">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-slate-900/40 dark:bg-black/80 backdrop-blur-xs animate-fade-in print:hidden">
           <div
-            className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden animate-scale-up"
+            className="w-full max-w-md bg-white dark:bg-black rounded-2xl shadow-2xl border border-slate-100 dark:border-zinc-800 overflow-hidden animate-scale-up"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-5 pb-3 border-b border-slate-100">
+            <div className="flex items-center justify-between p-5 pb-3 border-b border-slate-100 dark:border-zinc-800">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-primary-50 text-primary-600 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-primary-50 dark:bg-primary-950/80 text-primary-600 dark:text-primary-400 flex items-center justify-center">
                   <MessageSquarePlus className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-slate-900">Send Feedback</h3>
-                  <p className="text-xs text-slate-500">Help us improve Borrower Copilot</p>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white">Send Feedback</h3>
+                  <p className="text-xs text-slate-500 dark:text-zinc-400">Help us improve Borrower Copilot</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={handleClose}
-                className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+                className="p-1.5 text-slate-400 hover:text-slate-600 dark:text-zinc-400 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
                 aria-label="Close"
               >
                 <X className="w-5 h-5" />
@@ -142,7 +142,7 @@ export function FeedbackWidget() {
 
                   {/* Category Selection */}
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">Category</label>
+                    <label className="block text-sm font-semibold text-slate-700 dark:text-zinc-200 mb-2">Category</label>
                     <div className="flex gap-2">
                       {CATEGORIES.map((cat) => (
                         <button
@@ -155,7 +155,7 @@ export function FeedbackWidget() {
                           className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-sm font-semibold border-2 transition-all cursor-pointer ${
                             category === cat.value
                               ? cat.color + ' border-current'
-                              : 'text-slate-500 bg-slate-50 border-slate-200 hover:bg-slate-100 hover:border-slate-300'
+                              : 'text-slate-600 dark:text-zinc-300 bg-slate-50 dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 hover:bg-slate-100 dark:hover:bg-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700'
                           }`}
                         >
                           {cat.icon}

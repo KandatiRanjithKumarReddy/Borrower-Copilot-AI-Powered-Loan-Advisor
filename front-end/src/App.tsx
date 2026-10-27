@@ -244,17 +244,17 @@ export default function App() {
 
   if (authChecking) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-50 dark:bg-black flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="w-8 h-8 text-primary-600 animate-spin mx-auto mb-3" />
-          <p className="text-sm text-slate-500 font-medium">Initializing Borrower Copilot...</p>
+          <p className="text-sm text-slate-500 dark:text-zinc-400 font-medium">Initializing Borrower Copilot...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 dark:bg-black">
       {screen === 'landing' && (
         <LandingPage
           onStart={handleStart}
@@ -274,6 +274,10 @@ export default function App() {
           onHome={handleGoHome}
           loading={submitting}
           error={submitError}
+          user={user}
+          onNavigate={handleNavigate}
+          onLogout={handleLogout}
+          onOpenProfile={() => setShowProfileModal(true)}
         />
       )}
 

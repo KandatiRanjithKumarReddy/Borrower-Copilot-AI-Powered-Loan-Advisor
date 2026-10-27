@@ -22,6 +22,7 @@ import type {
 } from '../engine/types';
 
 import { HeaderBrand } from './HeaderBrand';
+import type { User as UserType } from '../api/client';
 
 interface QuestionnaireProps {
   onComplete: (input: AssessmentInput) => void;
@@ -29,6 +30,10 @@ interface QuestionnaireProps {
   onHome?: () => void;
   loading?: boolean;
   error?: string | null;
+  user?: UserType | null;
+  onNavigate?: (screen: 'landing' | 'about' | 'contact' | 'history' | 'login' | 'privacy') => void;
+  onLogout?: () => void;
+  onOpenProfile?: () => void;
 }
 
 const STEPS = ['Profile', 'Loan Details', 'Finances', 'Adaptive', 'Credit'];
@@ -64,6 +69,10 @@ export function Questionnaire({
   onHome,
   loading = false,
   error = null,
+  user,
+  onNavigate,
+  onLogout,
+  onOpenProfile,
 }: QuestionnaireProps) {
   const [step, setStep] = useState(0);
 
@@ -207,13 +216,18 @@ export function Questionnaire({
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-primary-50">
       {/* Header */}
-      <header className="border-b border-slate-100 bg-white/70 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
+      <header className="border-b border-slate-200/80 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md sticky top-0 z-40 shadow-2xs">
+        <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-3 sm:py-4">
           <HeaderBrand
             onClick={onHome}
+            onNavigate={onNavigate}
+            user={user}
+            onLogout={onLogout}
+            onOpenProfile={onOpenProfile}
+            activeScreen="questionnaire"
             rightAction={
-              <span className="text-sm font-semibold text-primary-700 bg-primary-50 border border-primary-100 px-3 py-1.5 rounded-full whitespace-nowrap">
-                Step {step + 1} of {STEPS.length}
+              <span className="text-xs sm:text-sm font-semibold text-primary-700 dark:text-primary-300 bg-primary-50 dark:bg-primary-950/70 border border-primary-100 dark:border-primary-900/60 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full whitespace-nowrap shrink-0">
+                <span className="hidden xs:inline">Step </span>{step + 1}/{STEPS.length}
               </span>
             }
           />
@@ -229,12 +243,12 @@ export function Questionnaire({
               <div key={label} className="flex-1 flex flex-col items-center gap-1.5">
                 <div
                   className={`w-full h-1.5 rounded-full transition-colors duration-300 ${
-                    i <= step ? 'bg-primary-500' : 'bg-slate-200'
+                    i <= step ? 'bg-primary-500' : 'bg-slate-200 dark:bg-zinc-800'
                   }`}
                 />
                 <div className="flex items-center gap-1">
-                  <Icon className={`w-3.5 h-3.5 ${i <= step ? 'text-primary-500' : 'text-slate-400'}`} />
-                  <span className={`text-xs font-medium hidden sm:inline ${i <= step ? 'text-primary-600' : 'text-slate-400'}`}>
+                  <Icon className={`w-3.5 h-3.5 ${i <= step ? 'text-primary-500 dark:text-primary-400' : 'text-slate-400 dark:text-zinc-500'}`} />
+                  <span className={`text-xs font-medium hidden sm:inline ${i <= step ? 'text-primary-600 dark:text-primary-400' : 'text-slate-400 dark:text-zinc-500'}`}>
                     {label}
                   </span>
                 </div>

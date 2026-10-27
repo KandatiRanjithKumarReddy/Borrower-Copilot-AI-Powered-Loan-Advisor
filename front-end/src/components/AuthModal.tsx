@@ -139,18 +139,18 @@ export function AuthModal({
   }, [mode, onSuccess]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-fade-in overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 dark:bg-black/80 backdrop-blur-xs animate-fade-in overflow-y-auto">
       <div
-        className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden my-8 animate-scale-up"
+        className="w-full max-w-md bg-white dark:bg-black rounded-2xl shadow-2xl border border-slate-100 dark:border-zinc-800 overflow-hidden my-8 animate-scale-up"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Top Bar */}
-        <div className="p-5 pb-3 flex items-center justify-between border-b border-slate-100">
+        <div className="p-5 pb-3 flex items-center justify-between border-b border-slate-100 dark:border-zinc-800">
           <HeaderBrand onClick={onClose} />
           {onClose && (
             <button
               onClick={onClose}
-              className="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+              className="p-2 text-slate-400 hover:text-slate-600 dark:text-zinc-400 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
               aria-label="Close"
             >
               <X className="w-5 h-5" />
@@ -160,7 +160,7 @@ export function AuthModal({
 
         <div className="p-6 sm:p-8">
           {/* Mode Switcher Tabs */}
-          <div className="flex bg-slate-100 p-1.5 rounded-xl mb-6">
+          <div className="flex bg-slate-100 dark:bg-zinc-900 p-1.5 rounded-xl mb-6">
             <button
               type="button"
               onClick={() => {
@@ -169,8 +169,8 @@ export function AuthModal({
               }}
               className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all cursor-pointer ${
                 mode === 'login'
-                  ? 'bg-white text-slate-900 shadow-xs'
-                  : 'text-slate-500 hover:text-slate-800'
+                  ? 'bg-white dark:bg-black text-slate-900 dark:text-white shadow-xs'
+                  : 'text-slate-500 dark:text-zinc-400 hover:text-slate-800 dark:hover:text-white'
               }`}
             >
               Sign In
@@ -183,8 +183,8 @@ export function AuthModal({
               }}
               className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all cursor-pointer ${
                 mode === 'register'
-                  ? 'bg-white text-slate-900 shadow-xs'
-                  : 'text-slate-500 hover:text-slate-800'
+                  ? 'bg-white dark:bg-black text-slate-900 dark:text-white shadow-xs'
+                  : 'text-slate-500 dark:text-zinc-400 hover:text-slate-800 dark:hover:text-white'
               }`}
             >
               Create Account
@@ -192,10 +192,10 @@ export function AuthModal({
           </div>
 
           <div className="mb-6">
-            <h3 className="text-2xl font-bold text-slate-900">
+            <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
               {mode === 'login' ? 'Welcome Back' : 'Create Your Free Account'}
             </h3>
-            <p className="text-sm text-slate-600 mt-1.5 leading-relaxed">
+            <p className="text-sm text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
               {mode === 'login'
                 ? 'Sign in to access your saved financial diagnostics and BorrowerIQ summaries.'
                 : 'Join Borrower Copilot to safely store and compare your borrowing capacity.'}
@@ -204,7 +204,7 @@ export function AuthModal({
 
           {/* Error Banner */}
           {error && (
-            <div className="mb-5 p-3.5 bg-danger-50 border border-danger-100 rounded-xl flex items-start gap-2.5 text-danger-700 text-sm animate-fade-in">
+            <div className="mb-5 p-3.5 bg-danger-50 dark:bg-danger-950/40 border border-danger-100 dark:border-danger-900/60 rounded-xl flex items-start gap-2.5 text-danger-700 dark:text-danger-400 text-sm animate-fade-in">
               <AlertCircle className="w-5 h-5 flex-shrink-0 text-danger-500 mt-0.5" />
               <span>{error}</span>
             </div>
@@ -213,7 +213,7 @@ export function AuthModal({
           {/* Official Google Identity Services Button */}
           <div className="w-full flex flex-col items-center mb-5">
             {googleLoading && (
-              <div className="w-full py-2.5 px-4 mb-2 bg-primary-50 border border-primary-100 rounded-xl text-primary-700 text-sm font-semibold flex items-center justify-center gap-2">
+              <div className="w-full py-2.5 px-4 mb-2 bg-primary-50 dark:bg-primary-950/60 border border-primary-100 dark:border-primary-900/60 rounded-xl text-primary-700 dark:text-primary-300 text-sm font-semibold flex items-center justify-center gap-2">
                 <Loader2 className="w-4 h-4 animate-spin" />
                 <span>Signing in with Google...</span>
               </div>
@@ -224,9 +224,9 @@ export function AuthModal({
           {/* Divider */}
           <div className="relative my-5 text-center">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-200"></div>
+              <div className="w-full border-t border-slate-200 dark:border-zinc-800"></div>
             </div>
-            <span className="relative px-3 bg-white text-xs uppercase tracking-wider text-slate-400 font-semibold">
+            <span className="relative px-3 bg-white dark:bg-black text-xs uppercase tracking-wider text-slate-400 dark:text-zinc-500 font-semibold">
               Or with email
             </span>
           </div>

@@ -80,8 +80,8 @@ export function AssessmentHistory({
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-primary-50">
       {/* Header */}
-      <header className="border-b border-slate-100 bg-white/70 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
+      <header className="border-b border-slate-200/80 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md sticky top-0 z-40 shadow-2xs">
+        <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-3 sm:py-4">
           <HeaderBrand
             onClick={onHome}
             onNavigate={onNavigate}
@@ -92,9 +92,9 @@ export function AssessmentHistory({
             rightAction={
               <button
                 onClick={onNewAssessment}
-                className="btn-primary text-xs sm:text-sm py-2 px-3.5 rounded-xl flex items-center gap-1.5 shrink-0 shadow-2xs cursor-pointer whitespace-nowrap"
+                className="btn-primary text-xs sm:text-sm py-1.5 sm:py-2 px-2.5 sm:px-3.5 rounded-xl flex items-center gap-1.5 shrink-0 shadow-2xs cursor-pointer whitespace-nowrap"
               >
-                <PlusCircle className="w-4 h-4" />
+                <PlusCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 <span className="hidden sm:inline">New Assessment</span>
                 <span className="sm:hidden">New</span>
               </button>

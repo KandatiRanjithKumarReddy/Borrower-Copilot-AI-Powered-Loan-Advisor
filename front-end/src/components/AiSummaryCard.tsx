@@ -220,15 +220,15 @@ export function AiSummaryCard({
 
       {/* State 2: Polished Multi-stage Loading Card */}
       {loading && (
-        <div className="py-8 px-6 text-center space-y-3 bg-slate-50/80 rounded-xl border border-slate-100 animate-pulse">
-          <div className="w-12 h-12 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center mx-auto shadow-inner">
+        <div className="py-8 px-6 text-center space-y-3 bg-slate-50/80 dark:bg-zinc-900/70 rounded-xl border border-slate-100 dark:border-zinc-800 animate-pulse">
+          <div className="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-950/90 text-primary-600 dark:text-primary-400 flex items-center justify-center mx-auto shadow-inner">
             <Loader2 className="w-6 h-6 animate-spin" />
           </div>
           <div>
-            <h4 className="text-base font-bold text-slate-900">
+            <h4 className="text-base font-bold text-slate-900 dark:text-white">
               Preparing your BorrowerIQ insights...
             </h4>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-sm mx-auto">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-zinc-400 mt-1 max-w-sm mx-auto">
               Analyzing your results. This may take a few moments.
             </p>
           </div>
@@ -242,7 +242,7 @@ export function AiSummaryCard({
 
       {/* State 3: 5 Key Takeaway Points List */}
       {!loading && summaryData && (
-        <div className="divide-y divide-slate-100">
+        <div className="divide-y divide-slate-100 dark:divide-zinc-800">
           {points.map((pointText, index) => {
             const isScriptOrQuote =
               pointText.includes('"') ||
@@ -252,25 +252,25 @@ export function AiSummaryCard({
             return (
               <div key={index} className="py-4 first:pt-1 last:pb-1 flex items-start gap-3.5">
                 {/* Number Badge */}
-                <div className="w-7 h-7 rounded-full bg-primary-100 text-primary-700 text-xs sm:text-sm font-bold flex items-center justify-center shrink-0 mt-0.5 border border-primary-200">
+                <div className="w-7 h-7 rounded-full bg-primary-100 dark:bg-primary-950/90 text-primary-700 dark:text-primary-300 text-xs sm:text-sm font-bold flex items-center justify-center shrink-0 mt-0.5 border border-primary-200 dark:border-primary-800/70">
                   {index + 1}
                 </div>
 
                 {/* Point Text with Bold Formatting */}
-                <div className="flex-1 text-sm sm:text-base text-slate-700 leading-relaxed">
+                <div className="flex-1 text-sm sm:text-base text-slate-700 dark:text-zinc-200 leading-relaxed">
                   <FormattedPointText text={pointText} />
 
                   {/* Inline Copy Button for bank negotiation script if present */}
                   {isScriptOrQuote && (
                     <button
                       onClick={() => handleCopy(pointText, index)}
-                      className="inline-flex items-center gap-1 text-xs font-semibold text-primary-600 hover:text-primary-700 bg-primary-50 hover:bg-primary-100 px-2.5 py-1 rounded-md transition-colors ml-2 align-middle cursor-pointer border border-primary-200"
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-primary-600 dark:text-primary-300 hover:text-primary-700 bg-primary-50 dark:bg-primary-950/70 hover:bg-primary-100 dark:hover:bg-primary-900/70 px-2.5 py-1 rounded-md transition-colors ml-2 align-middle cursor-pointer border border-primary-200 dark:border-primary-800/70"
                       title="Copy script"
                     >
                       {copiedIdx === index ? (
                         <>
-                          <Check className="w-3.5 h-3.5 text-emerald-600" />
-                          <span className="text-emerald-700">Copied</span>
+                          <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                          <span className="text-emerald-700 dark:text-emerald-300">Copied</span>
                         </>
                       ) : (
                         <>
@@ -289,14 +289,14 @@ export function AiSummaryCard({
 
       {/* State 4: Initial Prompt */}
       {!loading && !summaryData && (
-        <div className="text-center py-6 px-4 bg-slate-50/60 rounded-xl border border-slate-100">
-          <div className="w-10 h-10 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center mx-auto mb-3 border border-primary-200">
+        <div className="text-center py-6 px-4 bg-slate-50/60 dark:bg-zinc-900/60 rounded-xl border border-slate-100 dark:border-zinc-800">
+          <div className="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-950/90 text-primary-700 dark:text-primary-300 flex items-center justify-center mx-auto mb-3 border border-primary-200 dark:border-primary-800/70">
             <BrainCircuit className="w-5 h-5" />
           </div>
-          <h4 className="text-base font-bold text-slate-900 mb-1">
+          <h4 className="text-base font-bold text-slate-900 dark:text-white mb-1">
             Generate BorrowerIQ Insights
           </h4>
-          <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto mb-4 leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-300 max-w-md mx-auto mb-4 leading-relaxed">
             Get 5 plain-English takeaway insights analyzing your safe EMI ceiling, budget defense, add-on traps, and prepayment leverage.
           </p>
           <button
